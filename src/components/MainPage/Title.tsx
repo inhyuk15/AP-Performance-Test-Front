@@ -9,7 +9,7 @@ const Title = () => {
         color="primary"
         sx={{
           boxShadow: 'none',
-          backgroundColor: 'black',
+          backgroundColor: 'white',
         }}
       >
         <Toolbar
@@ -21,7 +21,7 @@ const Title = () => {
         >
           <NetworkCheckIcon
             sx={{
-              color: '#FFD700',
+              color: '#1976d2',
               width: '40px',
               height: '40px',
               marginRight: '12px',
@@ -31,7 +31,7 @@ const Title = () => {
               },
             }}
           />
-          <Typography variant="h4" sx={{ color: '#FFD700' }}>
+          <Typography variant="h4" sx={{ color: '#1976d2' }}>
             CNU WIFI 속도 시각화
           </Typography>
         </Toolbar>
