@@ -1,9 +1,9 @@
 import { CssBaseline } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import Title from './Title';
-import Summary from './Summary';
-import RoutingButton from './RoutingButton';
+import Title from './components/Title';
+import Summary from './components/Summary';
+import RoutingButton from './components/RoutingButton';
 
 const mainpageTheme = createTheme({
   palette: {

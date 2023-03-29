@@ -1,9 +1,12 @@
+import { RecoilRoot } from 'recoil';
 import AppRouter from './router/AppRouter';
 
 function App() {
   return (
     <div>
-      <AppRouter />
+      <RecoilRoot>
+        <AppRouter />
+      </RecoilRoot>
     </div>
   );
 }
