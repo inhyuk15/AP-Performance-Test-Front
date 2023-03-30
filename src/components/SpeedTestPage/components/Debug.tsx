@@ -1,6 +1,3 @@
-import { Grid, Divider, Box } from '@mui/material';
-
-import { styled } from '@mui/material/styles';
 import { useRecoilValue } from 'recoil';
 import {
   floorState,

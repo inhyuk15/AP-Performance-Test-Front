@@ -1,5 +1,4 @@
-[#11] Floor, Room, Location Class 설정 구성 #11
+[#12] Floor → Room → Start 예외 처리
 
-## 추가 사항
-- Floor, Room은 Form 형태로 선택기능 구현
-- Room 내부 좌표는 9분획으로 나누어 상대적 위치 설정하도록 구현
+## 수정 사항
+- Floor 선택시 Room을 ''로 초기화 해서 Floor → Start flow를 막음
