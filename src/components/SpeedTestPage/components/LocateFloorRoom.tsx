@@ -24,7 +24,7 @@ const SelectionTheme = createTheme({
 
 const RoomsDefault = () => {
   return (
-    <FormControl fullWidth sx={{ width: '180px' }} margin="normal">
+    <FormControl fullWidth sx={{ width: '142px' }} margin="normal">
       <InputLabel>Room</InputLabel>
       <Select label="Room">
         <MenuItem>층수를 먼저 선택해 주세요.</MenuItem>
@@ -46,7 +46,7 @@ const RoomsValid = ({
   };
 
   return (
-    <FormControl fullWidth sx={{ width: '180px' }} margin="normal">
+    <FormControl fullWidth sx={{ width: '142px' }} margin="normal">
       <InputLabel id={floor}>Room</InputLabel>
       <Select id={room} value={room} label="Room" onChange={roomChange}>
         {roomsArray.map(eachRoom => (
@@ -278,7 +278,7 @@ const LocateFloorRoom = () => {
         >
           <FormControl
             sx={{
-              width: '180px',
+              width: '142px',
             }}
             margin="normal"
           >
@@ -304,6 +304,7 @@ const LocateFloorRoom = () => {
           <RoomSplit floor={floor} />
         </Grid>
       </Grid>
+      <br />
     </ThemeProvider>
   );
 };

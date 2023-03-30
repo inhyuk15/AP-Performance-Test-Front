@@ -1,4 +1,5 @@
-[#10] Speedtest, Visualization Page로 분기하는 버튼 구성 #10
+[#11] Floor, Room, Location Class 설정 구성 #11
 
-## 변경 사항
-- "측정하기", "속도지도" 구현하여 Mainpage에서 사용
+## 추가 사항
+- Floor, Room은 Form 형태로 선택기능 구현
+- Room 내부 좌표는 9분획으로 나누어 상대적 위치 설정하도록 구현

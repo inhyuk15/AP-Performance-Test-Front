@@ -15,3 +15,8 @@ export const locationClassState = atom({
   key: 'locationClassState',
   default: '',
 });
+
+export const StartToggleState = atom({
+  key: 'StartToggleState',
+  default: true,
+});

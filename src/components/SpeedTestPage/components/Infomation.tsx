@@ -11,6 +11,7 @@ const Infomation = () => {
         variant={isMobile ? 'h3' : 'h4'}
         sx={{
           color: '#1976d2',
+          fontWeight: '500',
           mb: 2,
         }}
       >
@@ -18,7 +19,7 @@ const Infomation = () => {
       </Typography>
       <Typography
         variant="h5"
-        sx={{ color: '#1976d2', mb: 2, fontWeight: '400' }}
+        sx={{ color: '#1976d2', mb: 2, fontWeight: '500' }}
       >
         사용방법
       </Typography>
