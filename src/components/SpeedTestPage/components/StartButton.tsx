@@ -32,6 +32,9 @@ const StartButton = () => {
         console.log(
           `Average Ping: ${result.avgPing}ms, Jitter: ${result.jitter}ms`
         );
+        console.log(
+          ` upstream: ${result.upstreamSpeed}, downstream: ${result.downstreamSpeed}`
+        );
       } catch (error) {
         console.log(error);
       }

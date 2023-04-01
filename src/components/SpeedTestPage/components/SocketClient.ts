@@ -4,6 +4,8 @@ type Latency = number;
 interface MeasurementResult {
   avgPing: Latency;
   jitter: Latency;
+  upstreamSpeed: number; // KB/s
+  downstreamSpeed: number; // KB/s
 }
 
 let socket: Socket;
@@ -20,36 +22,64 @@ const SocketClient = (url: string) => {
     return sum / (latencies.length - 1);
   };
 
-  const sendPing = (index: number, totalRequests: number) => {
+  const sendPing = (
+    index: number,
+    totalRequests: number,
+    upstreamData: Uint8Array,
+    downstreamDataSize: number
+  ) => {
     if (index < totalRequests) {
       const start = Date.now();
-      socket.emit('measure_latency', start);
+      socket.emit('measure_latency', start, upstreamData, downstreamDataSize);
       setTimeout(() => {
-        sendPing(index + 1, totalRequests);
+        sendPing(index + 1, totalRequests, upstreamData, downstreamDataSize);
       }, 100);
     }
   };
 
-  const handleClick = (): Promise<MeasurementResult> => {
+  const handleClick = (
+    upstreamDataSize = 1024, // Default upstream data size: 1 KB
+    downstreamDataSize = 1024 // Default downstream data size: 1 KB
+  ): Promise<MeasurementResult> => {
     return new Promise(resolve => {
       const totalRequests = 10;
-      sendPing(0, totalRequests);
+      const upstreamDataBuffer = new ArrayBuffer(upstreamDataSize);
+      const upstreamData = new Uint8Array(upstreamDataBuffer);
 
-      socket.on('latency_result', (latency: Latency) => {
-        console.log(`Latency: ${latency}ms from client`);
-        pingResults.push(latency);
+      let downstreamDataSizeReceived = 0;
+      const startTime = Date.now();
+      sendPing(0, totalRequests, upstreamData, downstreamDataSize);
 
-        if (pingResults.length >= 10) {
-          const avgPing =
-            pingResults.reduce((a, b) => a + b) / pingResults.length;
-          const jitter = calculateJitter(pingResults);
-          console.log(
-            `Average Ping: ${avgPing}ms, Jitter: ${jitter}ms from client`
-          );
-          pingResults = [];
-          resolve({ avgPing, jitter });
+      socket.on(
+        'latency_result',
+        (latency: Latency, downstreamData: ArrayBuffer) => {
+          pingResults.push(latency);
+
+          // Record the downstream data size.
+          downstreamDataSizeReceived += downstreamData.byteLength;
+
+          if (pingResults.length >= 10) {
+            const endTime = Date.now();
+            const duration = (endTime - startTime) / 1000; // Calculate duration in seconds.
+            const avgPing =
+              pingResults.reduce((a, b) => a + b) / pingResults.length;
+            const jitter = calculateJitter(pingResults);
+
+            const upstreamSpeed = (upstreamDataSize * 10) / (1024 * duration); // KB/s
+            const downstreamSpeed =
+              downstreamDataSizeReceived / (1024 * duration); // KB/s
+
+            pingResults = [];
+            resolve({
+              avgPing: Number(avgPing.toFixed(2)),
+              jitter: Number(jitter.toFixed(2)),
+              upstreamSpeed: Number(upstreamSpeed.toFixed(2)),
+              downstreamSpeed: Number(downstreamSpeed.toFixed(2)),
+            });
+            downstreamDataSizeReceived = 0; // Reset the downstream data size for the next set of measurements.
+          }
         }
-      });
+      );
     });
   };
 
