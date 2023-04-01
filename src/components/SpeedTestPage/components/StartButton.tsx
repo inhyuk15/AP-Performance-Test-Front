@@ -9,6 +9,9 @@ import {
   locationClassState,
 } from '../../../module/Atom';
 
+const serverUrl = 'ws://localhost:3000';
+const { handleClick } = SocketClient(serverUrl);
+
 const StartButton = () => {
   const setStartToggle = useSetRecoilState(StartToggleState);
   const [popupOpen, setPopupOpen] = useState<boolean>(false);
@@ -19,13 +22,19 @@ const StartButton = () => {
   const locationClass = useRecoilValue(locationClassState);
 
   // START onClick Func
-  const onClickStartButton = () => {
+  const onClickStartButton = async () => {
     if (floor === '' || room === '' || locationClass === '') {
       setPopupOpen(true);
     } else {
       setStartToggle(prev => !prev);
-      const socket = SocketClient('ws://localhost:3000');
-      socket.handleClick();
+      const result = await handleClick();
+      try {
+        console.log(
+          `Average Ping: ${result.avgPing}ms, Jitter: ${result.jitter}ms`
+        );
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
