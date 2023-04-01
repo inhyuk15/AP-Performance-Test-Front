@@ -1,7 +1,7 @@
 import { io, Socket } from 'socket.io-client';
 
 type Latency = number;
-interface MeasurementResult {
+export interface MeasurementResult {
   avgPing: Latency;
   jitter: Latency;
   upstreamSpeed: number; // KB/s
@@ -77,6 +77,8 @@ const SocketClient = (url: string) => {
               downstreamSpeed: Number(downstreamSpeed.toFixed(2)),
             });
             downstreamDataSizeReceived = 0; // Reset the downstream data size for the next set of measurements.
+
+            socket.disconnect();
           }
         }
       );
