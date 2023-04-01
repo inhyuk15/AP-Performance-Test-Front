@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Box, Button, Dialog, DialogTitle, DialogActions } from '@mui/material';
-
+import SocketClient from './SocketClient';
 import {
   StartToggleState,
   floorState,
@@ -24,6 +24,8 @@ const StartButton = () => {
       setPopupOpen(true);
     } else {
       setStartToggle(prev => !prev);
+      const socket = SocketClient('ws://localhost:3000');
+      socket.handleClick();
     }
   };
 
