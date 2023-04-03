@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Box, Button, Dialog, DialogTitle, DialogActions } from '@mui/material';
-
+import SocketClient, { MeasurementResult } from './SocketClient';
 import {
   StartToggleState,
   floorState,
   roomState,
   locationClassState,
 } from '../../../module/Atom';
+
+const serverUrl = 'ws://localhost:3000';
+const { handleClick } = SocketClient(serverUrl);
 
 const StartButton = () => {
   const setStartToggle = useSetRecoilState(StartToggleState);
@@ -18,12 +21,42 @@ const StartButton = () => {
   const room = useRecoilValue(roomState);
   const locationClass = useRecoilValue(locationClassState);
 
+  const sendDataToServer = async (measurementResult: MeasurementResult) => {
+    try {
+      const response = await fetch('http://localhost:3000/api/save_speedtest', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(measurementResult),
+      });
+      const result = await response.json();
+      console.log('Data sent to server:', result);
+    } catch (error) {
+      console.error('Error sending data to server:', error);
+    }
+  };
+
   // START onClick Func
-  const onClickStartButton = () => {
+  const onClickStartButton = async () => {
     if (floor === '' || room === '' || locationClass === '') {
       setPopupOpen(true);
     } else {
       setStartToggle(prev => !prev);
+
+      try {
+        const result = await handleClick();
+        await sendDataToServer(result);
+
+        console.log(
+          `Average Ping: ${result.avgPing}ms, Jitter: ${result.jitter}ms`
+        );
+        console.log(
+          ` upstream: ${result.upstreamSpeed}, downstream: ${result.downstreamSpeed}`
+        );
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
