@@ -8,10 +8,10 @@ import StartButton from './components/StartButton';
 import ShowSpeed from './components/ShowSpeed';
 import Debug from './components/Debug';
 
-import { StartToggleState } from '../../module/Atom';
+import { startToggleState } from '../../module/Atom';
 
 const SpeedTestPage = () => {
-  const startToggle = useRecoilValue(StartToggleState);
+  const startToggle = useRecoilValue(startToggleState);
 
   return (
     <div>
