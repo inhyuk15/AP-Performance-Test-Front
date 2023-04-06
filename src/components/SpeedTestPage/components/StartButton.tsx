@@ -3,18 +3,22 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Box, Button, Dialog, DialogTitle, DialogActions } from '@mui/material';
 import SocketClient, { MeasurementResult } from './SocketClient';
 import {
-  StartToggleState,
+  startToggleState,
   floorState,
   roomState,
   locationClassState,
+  cookieState,
 } from '../../../module/Atom';
 
-const serverUrl = 'ws://localhost:3000';
-const { handleClick } = SocketClient(serverUrl);
+const host = '192.168.0.147';
+const httpUrl = `http://${host}:3000/api/save_speedtest`;
+const socketUrl = `ws://${host}:3000`;
+const { handleClick } = SocketClient(socketUrl);
 
 const StartButton = () => {
-  const setStartToggle = useSetRecoilState(StartToggleState);
   const [popupOpen, setPopupOpen] = useState<boolean>(false);
+  const setStartToggle = useSetRecoilState(startToggleState);
+  const makedCookie = useRecoilValue(cookieState);
 
   // START 버튼 기능 전제조건
   const floor = useRecoilValue(floorState);
@@ -23,10 +27,14 @@ const StartButton = () => {
 
   const sendDataToServer = async (measurementResult: MeasurementResult) => {
     try {
-      const response = await fetch('http://localhost:3000/api/save_speedtest', {
+      // 측정 데이터를 서버에 보냄 || 독립개체
+      const response = await fetch(httpUrl, {
         method: 'POST',
+        credentials: 'include',
         headers: {
+          'Access-Control-Allow-Origin': '*',
           'Content-Type': 'application/json',
+          Cookie: '쿠키이름=쿠키값',
         },
         body: JSON.stringify(measurementResult),
       });
@@ -45,14 +53,15 @@ const StartButton = () => {
       setStartToggle(prev => !prev);
 
       try {
-        const result = await handleClick();
-        await sendDataToServer(result);
+        // handleClick() -> 속도 측정 함수
+        const resultFromMeasurement = await handleClick();
+        await sendDataToServer(resultFromMeasurement);
 
         console.log(
-          `Average Ping: ${result.avgPing}ms, Jitter: ${result.jitter}ms`
+          `Average Ping: ${resultFromMeasurement.avgPing}ms, Jitter: ${resultFromMeasurement.jitter}ms`
         );
         console.log(
-          ` upstream: ${result.upstreamSpeed}, downstream: ${result.downstreamSpeed}`
+          `upstream: ${resultFromMeasurement.upstreamSpeed}, downstream: ${resultFromMeasurement.downstreamSpeed}`
         );
       } catch (error) {
         console.log(error);
