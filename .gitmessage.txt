@@ -16,7 +16,7 @@ Styled-Componet 사용하여 레이아웃 작성하였고 onClick, 속도에 따
 
 # 꼬릿말(footer)을 아랫줄에 작성 (현재 커밋과 관련된 이슈 번호 추가 등)
 # 예) Close #7
-Close #15
+Close #17
 
 ################
 
