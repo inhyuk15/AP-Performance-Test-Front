@@ -4,7 +4,7 @@ import { useCookies } from 'react-cookie';
 import { v4 as uuid4 } from 'uuid';
 // import { Button } from '@mui/material';
 
-import { cookieState } from '../module/Atom';
+import { cookieState } from '../../module/Atom';
 
 const HandleCookie = () => {
   const [cookies, setCookie] = useCookies(['userIdentify']);

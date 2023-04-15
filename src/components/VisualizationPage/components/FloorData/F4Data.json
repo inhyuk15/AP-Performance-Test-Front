@@ -1,0 +1,126 @@
+{
+  "Container": {
+    "SquareBackground": {
+      "width": "349px",
+      "height": "799px",
+      "gridColumn": "1 / span 349",
+      "gridRow": "1 / span 799",
+      "backgroundColor": "#ddd"
+    },
+    "SquareUnit": [
+      {
+        "id": "416호",
+        "width": "149px",
+        "height": "109px",
+        "gridColumn": "1 / span 149",
+        "gridRow": "1 / span 109"
+      },
+      {
+        "id": "415호",
+        "width": "149px",
+        "height": "109px",
+        "gridColumn": "1 / span 149",
+        "gridRow": "111 / span 109"
+      },
+      {
+        "id": "414호",
+        "width": "149px",
+        "height": "109px",
+        "gridColumn": "1 / span 149",
+        "gridRow": "221 / span 109"
+      },
+      {
+        "id": "413호",
+        "width": "149px",
+        "height": "79px",
+        "gridColumn": "1 / span 149",
+        "gridRow": "331 / span 79"
+      },
+      {
+        "id": "412호",
+        "width": "149px",
+        "height": "79px",
+        "gridColumn": "1 / span 149",
+        "gridRow": "411 / span 79"
+      },
+      {
+        "id": "411호",
+        "width": "149px",
+        "height": "79px",
+        "gridColumn": "1 / span 149",
+        "gridRow": "491 / span 79"
+      },
+
+      {
+        "id": "410호",
+        "width": "149px",
+        "height": "114px",
+        "gridColumn": "1 / span 149",
+        "gridRow": "571 / span 114"
+      },
+      {
+        "id": "409호",
+        "width": "149px",
+        "height": "114px",
+        "gridColumn": "1 / span 149",
+        "gridRow": "686 / span 114"
+      },
+      {
+        "id": "401호",
+        "width": "129",
+        "height": "49px",
+        "gridColumn": "221 / span 129",
+        "gridRow": "1 / span 49"
+      },
+      {
+        "id": "402호",
+        "width": "129px",
+        "height": "49px",
+        "gridColumn": "221 / span 129",
+        "gridRow": "51 / span 49"
+      },
+      {
+        "id": "403호",
+        "width": "129px",
+        "height": "79px",
+        "gridColumn": "221 / span 129",
+        "gridRow": "101 / span 79"
+      },
+      {
+        "id": "404호",
+        "width": "129px",
+        "height": "79px",
+        "gridColumn": "221 / span 129",
+        "gridRow": "181 / span 79"
+      },
+      {
+        "id": "405호",
+        "width": "129px",
+        "height": "69px",
+        "gridColumn": "221 / span 129",
+        "gridRow": "261 / span 69"
+      },
+      {
+        "id": "406호",
+        "width": "129px",
+        "height": "79px",
+        "gridColumn": "221 / span 129",
+        "gridRow": "461 / span 79"
+      },
+      {
+        "id": "407호",
+        "width": "129px",
+        "height": "59px",
+        "gridColumn": "221 / span 129",
+        "gridRow": "541 / span 59"
+      },
+      {
+        "id": "408호",
+        "width": "129px",
+        "height": "69px",
+        "gridColumn": "221 / span 129",
+        "gridRow": "731 / span 69"
+      }
+    ]
+  }
+}
