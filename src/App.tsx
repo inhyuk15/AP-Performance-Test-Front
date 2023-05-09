@@ -1,6 +1,7 @@
 import { RecoilRoot } from 'recoil';
 import AppRouter from './router/AppRouter';
-import HandleCookie from './components/Shared/HandleCookie';
+import HandleCookie from './components/HandleCookie';
+
 
 function App() {
   return (

@@ -10,7 +10,7 @@ import {
   cookieState,
 } from '../../../module/Atom';
 
-const host = '192.168.0.147';
+const host = import.meta.env.VITE_SERVER_IP;
 const httpUrl = `http://${host}:3000/api/save_speedtest`;
 const socketUrl = `ws://${host}:3000`;
 const { handleClick } = SocketClient(socketUrl);
@@ -18,16 +18,22 @@ const { handleClick } = SocketClient(socketUrl);
 const StartButton = () => {
   const [popupOpen, setPopupOpen] = useState<boolean>(false);
   const setStartToggle = useSetRecoilState(startToggleState);
-  const makedCookie = useRecoilValue(cookieState);
+  const userCookie = useRecoilValue(cookieState);
 
   // START 버튼 기능 전제조건
-  const floor = useRecoilValue(floorState);
-  const room = useRecoilValue(roomState);
+  const floorNumber = useRecoilValue(floorState);
+  const roomNumber = useRecoilValue(roomState);
   const locationClass = useRecoilValue(locationClassState);
 
   const sendDataToServer = async (measurementResult: MeasurementResult) => {
     try {
-      // 측정 데이터를 서버에 보냄 || 독립개체
+      const dataToSend = {
+        ...measurementResult,
+        floorNumber,
+        roomNumber,
+        locationClass,
+        userCookie,
+      };
       const response = await fetch(httpUrl, {
         method: 'POST',
         credentials: 'include',
@@ -36,8 +42,9 @@ const StartButton = () => {
           'Content-Type': 'application/json',
           Cookie: '쿠키이름=쿠키값',
         },
-        body: JSON.stringify(measurementResult),
+        body: JSON.stringify(dataToSend),
       });
+      console.log(JSON.stringify(measurementResult));
       const result = await response.json();
       console.log('Data sent to server:', result);
     } catch (error) {
@@ -47,7 +54,7 @@ const StartButton = () => {
 
   // START onClick Func
   const onClickStartButton = async () => {
-    if (floor === '' || room === '' || locationClass === '') {
+    if (floorNumber === '' || roomNumber === '' || locationClass === '') {
       setPopupOpen(true);
     } else {
       setStartToggle(prev => !prev);
