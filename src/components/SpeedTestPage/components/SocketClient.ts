@@ -14,6 +14,7 @@ const SocketClient = (url: string) => {
   if (!socket) socket = io(url);
   let pingResults: Latency[] = [];
 
+  // Jitter 측정 -> Latency를 바탕으로 측정할 수 있나봄
   const calculateJitter = (latencies: Latency[]): Latency => {
     let sum = 0;
     for (let i = 1; i < latencies.length; i += 1) {
@@ -22,6 +23,7 @@ const SocketClient = (url: string) => {
     return sum / (latencies.length - 1);
   };
 
+  // Ping 측정
   const sendPing = (
     index: number,
     totalRequests: number,
@@ -43,6 +45,7 @@ const SocketClient = (url: string) => {
   ): Promise<MeasurementResult> => {
     return new Promise(resolve => {
       const totalRequests = 10;
+      // 버퍼를 초기화 하는 것이 좋을듯?
       const upstreamDataBuffer = new ArrayBuffer(upstreamDataSize);
       const upstreamData = new Uint8Array(upstreamDataBuffer);
 
