@@ -40,7 +40,6 @@ const StartButton = () => {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Content-Type': 'application/json',
-          Cookie: '쿠키이름=쿠키값',
         },
         body: JSON.stringify(dataToSend),
       });
