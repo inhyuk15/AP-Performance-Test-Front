@@ -63,6 +63,16 @@ interface NetworkIndex {
   upstreamSpeed: number;
 }
 
+export const NetWorkIndexState = atom({
+  key: 'NetWorkIndexState',
+  default: {
+    avgPing: 0,
+    jitter: 0,
+    upstreamSpeed: 0,
+    downstreamSpeed: 0,
+  },
+});
+
 export const PositionSpeedMapState = atom<Map<string, NetworkIndex[]>>({
   key: 'PositionSpeedMapState',
   default: new Map<string, NetworkIndex[]>(),

@@ -18,9 +18,12 @@ interface MeasuredDate {
   __v: number;
 }
 
+const host = import.meta.env.VITE_SERVER_IP;
+const httpUrl = `http://${host}:3000/api/speedtest`;
+
 const fetchData = async () => {
   try {
-    const response = await axios.get('http://192.168.0.37:3000/api/speedtest');
+    const response = await axios.get(httpUrl);
     const jsonData: MeasuredDate[] = response.data;
     return jsonData;
   } catch (error) {
