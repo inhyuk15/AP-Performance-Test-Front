@@ -86,7 +86,7 @@ const StartButton = () => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          height: '15vh',
+          height: '10vh',
         }}
       >
         <Button
@@ -103,6 +103,7 @@ const StartButton = () => {
               backgroundColor: '#FFF',
               color: '#1976d2',
             },
+            height: '50px',
           }}
         >
           START

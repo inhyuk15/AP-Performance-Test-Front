@@ -16,9 +16,6 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "src",
-    "src/components/SpeedTestPage/components/RoomClass/.tsxx"
-  ],
+  "include": ["src", "src/components/SpeedTestPage/components/RoomClass/.tsxx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

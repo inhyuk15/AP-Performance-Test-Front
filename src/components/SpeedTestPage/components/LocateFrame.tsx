@@ -9,9 +9,9 @@ import {
   locationClassState,
 } from '../../../module/Atom';
 
-import F4LocationFrame from './LocationFrameData/F4LocationFrame.json';
-import F5LocationFrame from './LocationFrameData/F5LocationFrame.json';
-import F6LocationFrame from './LocationFrameData/F6LocationFrame.json';
+import F4ClassFrame from '../../../data/ClassFrameData/F4ClassFrame.json';
+import F5ClassFrame from '../../../data/ClassFrameData/F5ClassFrame.json';
+import F6ClassFrame from '../../../data/ClassFrameData/F6ClassFrame.json';
 
 const Container = styled(Box)({
   width: 300,
@@ -199,6 +199,7 @@ const RightDoorRoom = ({ doors }: { doors: number[] }) => {
             <LocationOnIcon
               sx={{
                 color: '#1976d2',
+                fontSize: 50,
               }}
             />
           )}
@@ -221,6 +222,7 @@ const RightDoorRoom = ({ doors }: { doors: number[] }) => {
           <LocationOnIcon
             sx={{
               color: '#1976d2',
+              fontSize: 50,
             }}
           />
         )}
@@ -261,6 +263,7 @@ const LeftDoorRoom = ({ doors }: { doors: number[] }) => {
             <LocationOnIcon
               sx={{
                 color: '#1976d2',
+                fontSize: 50,
               }}
             />
           )}
@@ -284,6 +287,7 @@ const LeftDoorRoom = ({ doors }: { doors: number[] }) => {
           <LocationOnIcon
             sx={{
               color: '#1976d2',
+              fontSize: 50,
             }}
           />
         )}
@@ -324,6 +328,7 @@ const TopDoorRoom = ({ doors }: { doors: number[] }) => {
             <LocationOnIcon
               sx={{
                 color: '#1976d2',
+                fontSize: 50,
               }}
             />
           )}
@@ -347,6 +352,7 @@ const TopDoorRoom = ({ doors }: { doors: number[] }) => {
           <LocationOnIcon
             sx={{
               color: '#1976d2',
+              fontSize: 50,
             }}
           />
         )}
@@ -387,6 +393,7 @@ const BottomDoorRoom = ({ doors }: { doors: number[] }) => {
             <LocationOnIcon
               sx={{
                 color: '#1976d2',
+                fontSize: 50,
               }}
             />
           )}
@@ -410,6 +417,7 @@ const BottomDoorRoom = ({ doors }: { doors: number[] }) => {
           <LocationOnIcon
             sx={{
               color: '#1976d2',
+              fontSize: 50,
             }}
           />
         )}
@@ -444,7 +452,7 @@ const MakeFrame = (direction: string, doors: number[]) => {
 
   // 현재 버전은 동서남북 한 쪽 방향의 문만 표시중
   // 복잡한 출입문인 방은 Custom 해서 구현해야함 ex) 위, 오른쪽 출입문
-  return <div>Wrong Direction!!</div>;
+  return <div>Wrong Direction.</div>;
 };
 
 // floor, room 정보를 사용하여 json으로 선언된 출입문 프레임 생성
@@ -454,33 +462,36 @@ const LocateFrame = () => {
 
   // Floor 4
   if (floor === '4' && room !== '') {
+    const index = 401;
     const nDoor: number = parseInt(room, 10);
-    const doors: number[] = F4LocationFrame.Data[nDoor - 401].Door;
-    const direction = F4LocationFrame.Data[nDoor - 401].Class;
+    const doors: number[] = F4ClassFrame.Data[nDoor - index].Door;
+    const direction = F4ClassFrame.Data[nDoor - index].Direction;
 
     return <div>{MakeFrame(direction, doors)}</div>;
   }
 
   // Floor 5
   if (floor === '5' && room !== '') {
+    const index = 501;
     const nDoor: number = parseInt(room, 10);
-    const doors: number[] = F5LocationFrame.Data[nDoor - 501].Door;
-    const direction: string = F5LocationFrame.Data[nDoor - 501].Class;
+    const doors: number[] = F5ClassFrame.Data[nDoor - index].Door;
+    const direction: string = F5ClassFrame.Data[nDoor - index].Direction;
 
     return <div>{MakeFrame(direction, doors)}</div>;
   }
 
   // Floor 6
   if (floor === '6' && room !== '') {
+    const index = 601;
     const nDoor: number = parseInt(room, 10);
-    const doors: number[] = F6LocationFrame.Data[nDoor - 601].Door;
-    const direction = F6LocationFrame.Data[nDoor - 601].Class;
+    const doors: number[] = F6ClassFrame.Data[nDoor - index].Door;
+    const direction = F6ClassFrame.Data[nDoor - index].Direction;
 
     return <div>{MakeFrame(direction, doors)}</div>;
   }
 
   // 현재 버전은 4, 5, 6층 만 지원
-  return <div>{null}</div>;
+  return null;
 };
 
 export default LocateFrame;

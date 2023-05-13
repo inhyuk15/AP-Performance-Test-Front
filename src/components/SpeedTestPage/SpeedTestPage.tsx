@@ -3,7 +3,7 @@ import { CssBaseline } from '@mui/material';
 
 import Infomation from './components/Infomation';
 import LocateFloorRoom from './components/LocateFloorRoom';
-import LocateFrame from './components/LocationFrameData';
+import LocateFrame from './components/LocateFrame';
 import StartButton from './components/StartButton';
 import ShowSpeed from './components/ShowSpeed';
 import Debug from './components/Debug';
@@ -18,10 +18,10 @@ const SpeedTestPage = () => {
       <CssBaseline />
       <Infomation />
       {startToggle ? (
-        <div>
+        <>
           <LocateFloorRoom />
           <LocateFrame />
-        </div>
+        </>
       ) : (
         <ShowSpeed />
       )}
