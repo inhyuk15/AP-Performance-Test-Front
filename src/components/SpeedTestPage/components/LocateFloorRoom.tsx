@@ -15,12 +15,9 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 /* Atom */
 import { floorState, roomState } from '../../../module/Atom';
 
-import F1Rooms from '../../../assets/F1Rooms';
-import F2Rooms from '../../../assets/F2Rooms';
-import F3Rooms from '../../../assets/F3Rooms';
-import F4Rooms from '../../../assets/F4Rooms';
-import F5Rooms from '../../../assets/F5Rooms';
-import F6Rooms from '../../../assets/F6Rooms';
+import F4Rooms from '../../../data/RoomsData/F4Rooms.json';
+import F5Rooms from '../../../data/RoomsData/F5Rooms.json';
+import F6Rooms from '../../../data/RoomsData/F6Rooms.json';
 
 const SelectionTheme = createTheme({
   typography: {
@@ -68,24 +65,6 @@ const RoomsValid = ({
 
 const RoomSplit = ({ floor }: { floor: string }) => {
   switch (floor) {
-    case '1':
-      return (
-        <div>
-          <RoomsValid floor="1" roomsArray={F1Rooms} />
-        </div>
-      );
-    case '2':
-      return (
-        <div>
-          <RoomsValid floor="1" roomsArray={F2Rooms} />
-        </div>
-      );
-    case '3':
-      return (
-        <div>
-          <RoomsValid floor="3" roomsArray={F3Rooms} />
-        </div>
-      );
     case '4':
       return (
         <div>
@@ -121,7 +100,7 @@ const LocateFloorRoom = () => {
     setRoom('');
   };
 
-  const floorArray: string[] = ['1', '2', '3', '4', '5', '6'];
+  const floorArray: string[] = ['4', '5', '6'];
 
   return (
     <ThemeProvider theme={SelectionTheme}>

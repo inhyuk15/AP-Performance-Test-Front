@@ -1,0 +1,85 @@
+{
+  "Floor": "4",
+  "Data": [
+    {
+      "Room": "401",
+      "Direction": "LEFT",
+      "Door": [1]
+    },
+    {
+      "Room": "402",
+      "Direction": "LEFT",
+      "Door": [7]
+    },
+    {
+      "Room": "403",
+      "Direction": "LEFT",
+      "Door": [1, 7]
+    },
+    {
+      "Room": "404",
+      "Direction": "LEFT",
+      "Door": [1, 7]
+    },
+    {
+      "Room": "405",
+      "Direction": "LEFT",
+      "Door": [1, 7]
+    },
+    {
+      "Room": "406",
+      "Direction": "LEFT",
+      "Door": [1, 7]
+    },
+    {
+      "Room": "407",
+      "Direction": "LEFT",
+      "Door": [7]
+    },
+    {
+      "Room": "408",
+      "Direction": "LEFT",
+      "Door": [1]
+    },
+    {
+      "Room": "409",
+      "Direction": "RIGHT",
+      "Door": [3]
+    },
+    {
+      "Room": "410",
+      "Direction": "RIGHT",
+      "Door": [3, 9]
+    },
+    {
+      "Room": "411",
+      "Direction": "RIGHT",
+      "Door": [3, 9]
+    },
+    {
+      "Room": "412",
+      "Direction": "RIGHT",
+      "Door": [3, 9]
+    },
+    {
+      "Room": "413",
+      "Direction": "RIGHT",
+      "Door": [3, 9]
+    },
+    {
+      "Room": "414",
+      "Direction": "RIGHT",
+      "Door": [3, 9]
+    },
+    {
+      "Room": "415",
+      "Direction": "RIGHT",
+      "Door": [3, 9]
+    },
+    {
+      "Room": "416",
+      "Direction": "RIGHT",
+      "Door": [3, 9]
+    }
+  ]
+}

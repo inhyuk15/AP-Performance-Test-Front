@@ -18,10 +18,10 @@ const SpeedTestPage = () => {
       <CssBaseline />
       <Infomation />
       {startToggle ? (
-        <div>
+        <>
           <LocateFloorRoom />
           <LocateFrame />
-        </div>
+        </>
       ) : (
         <ShowSpeed />
       )}

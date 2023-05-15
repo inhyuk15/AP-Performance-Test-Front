@@ -1,17 +1,14 @@
 import { Box } from '@mui/material';
 import styled from '@emotion/styled';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
-import {
-  floorState,
-  roomState,
-  locationClassState,
-} from '../../../module/Atom';
+import { useRecoilValue } from 'recoil';
+import { popUpFloorState, popUpRoomState } from '../../../module/Atom';
 
 import F4ClassFrame from '../../../data/ClassFrameData/F4ClassFrame.json';
 import F5ClassFrame from '../../../data/ClassFrameData/F5ClassFrame.json';
 import F6ClassFrame from '../../../data/ClassFrameData/F6ClassFrame.json';
+
+import DetermineClassColor from './DetermineClassColor';
 
 const Container = styled(Box)({
   width: 300,
@@ -35,10 +32,6 @@ const NormalSquare = styled(Box)({
   justifyContent: 'center',
   alignItems: 'center',
   border: '1px solid #ccc',
-  '&:hover': {
-    backgroundColor: '#1976d2',
-    cursor: 'crosshair',
-  },
 });
 
 // 오른쪽 모서리에 출입문
@@ -50,10 +43,7 @@ const RightDoorSquare = styled(Box)({
   alignItems: 'center',
   border: '1px solid #ccc',
   borderRight: '',
-  '&:hover': {
-    backgroundColor: '#1976d2',
-    cursor: 'crosshair',
-  },
+
   position: 'relative',
   '&::after': {
     content: '"출입문"',
@@ -83,10 +73,7 @@ const LeftDoorSquare = styled(Box)({
   alignItems: 'center',
   border: '1px solid #ccc',
   borderRight: '',
-  '&:hover': {
-    backgroundColor: '#1976d2',
-    cursor: 'crosshair',
-  },
+
   position: 'relative',
   '&::after': {
     content: '"출입문"',
@@ -116,10 +103,7 @@ const TopDoorSquare = styled(Box)({
   alignItems: 'center',
   border: '1px solid #ccc',
   borderBottom: '',
-  '&:hover': {
-    backgroundColor: '#1976d2',
-    cursor: 'crosshair',
-  },
+
   position: 'relative',
   '&::after': {
     content: '"출입문"',
@@ -149,10 +133,7 @@ const BottomDoorSquare = styled(Box)({
   alignItems: 'center',
   border: '1px solid #ccc',
   borderBottom: '',
-  '&:hover': {
-    backgroundColor: '#1976d2',
-    cursor: 'crosshair',
-  },
+
   position: 'relative',
   '&::after': {
     content: '"출입문"',
@@ -175,58 +156,35 @@ const BottomDoorSquare = styled(Box)({
 
 // 오른쪽에 출입문 있는 방
 const RightDoorRoom = ({ doors }: { doors: number[] }) => {
-  const [locationClass, setLocationClass] = useRecoilState(locationClassState);
-
-  const setLocationClassWithClick = (id: number) => {
-    setLocationClass(id.toString());
-  };
+  const popUpFloor = useRecoilValue(popUpFloorState);
+  const popUpRoom = useRecoilValue(popUpRoomState);
 
   const rightDoorRoom = Array.from({ length: 9 }, (_, i) => i + 1).map(id => {
     if (doors.includes(id)) {
       return (
         <RightDoorSquare
           key={id}
-          onClick={() => setLocationClassWithClick(id)}
           sx={{
-            '&:hover': {
-              '& svg': {
-                color: 'white',
-              },
-            },
+            backgroundColor: DetermineClassColor(
+              popUpFloor,
+              popUpRoom,
+              id.toString()
+            ),
           }}
-        >
-          {locationClass === id.toString() && (
-            <LocationOnIcon
-              sx={{
-                color: '#1976d2',
-                fontSize: 50,
-              }}
-            />
-          )}
-        </RightDoorSquare>
+        />
       );
     }
     return (
       <NormalSquare
         key={id}
-        onClick={() => setLocationClassWithClick(id)}
         sx={{
-          '&:hover': {
-            '& svg': {
-              color: 'white',
-            },
-          },
+          backgroundColor: DetermineClassColor(
+            popUpFloor,
+            popUpRoom,
+            id.toString()
+          ),
         }}
-      >
-        {locationClass === id.toString() && (
-          <LocationOnIcon
-            sx={{
-              color: '#1976d2',
-              fontSize: 50,
-            }}
-          />
-        )}
-      </NormalSquare>
+      />
     );
   });
 
@@ -239,59 +197,35 @@ const RightDoorRoom = ({ doors }: { doors: number[] }) => {
 
 // 왼쪽에 출입문 있는 방
 const LeftDoorRoom = ({ doors }: { doors: number[] }) => {
-  const [locationClass, setLocationClass] = useRecoilState(locationClassState);
-
-  const setLocationClassWithClick = (id: number) => {
-    setLocationClass(id.toString());
-  };
+  const popUpFloor = useRecoilValue(popUpFloorState);
+  const popUpRoom = useRecoilValue(popUpRoomState);
 
   const leftDoorRoom = Array.from({ length: 9 }, (_, i) => i + 1).map(id => {
     if (doors.includes(id)) {
       return (
         <LeftDoorSquare
           key={id}
-          onClick={() => setLocationClassWithClick(id)}
           sx={{
-            '&:hover': {
-              '& svg': {
-                color: 'white',
-              },
-            },
+            backgroundColor: DetermineClassColor(
+              popUpFloor,
+              popUpRoom,
+              id.toString()
+            ),
           }}
-        >
-          {locationClass === id.toString() && (
-            <LocationOnIcon
-              sx={{
-                color: '#1976d2',
-                fontSize: 50,
-              }}
-            />
-          )}
-        </LeftDoorSquare>
+        />
       );
     }
     return (
       <NormalSquare
         key={id}
-        onClick={() => setLocationClassWithClick(id)}
         sx={{
-          '&:hover': {
-            '& svg': {
-              // 호버일때 아이콘과 배경의 색 반전
-              color: 'white',
-            },
-          },
+          backgroundColor: DetermineClassColor(
+            popUpFloor,
+            popUpRoom,
+            id.toString()
+          ),
         }}
-      >
-        {locationClass === id.toString() && (
-          <LocationOnIcon
-            sx={{
-              color: '#1976d2',
-              fontSize: 50,
-            }}
-          />
-        )}
-      </NormalSquare>
+      />
     );
   });
 
@@ -304,59 +238,35 @@ const LeftDoorRoom = ({ doors }: { doors: number[] }) => {
 
 // 위쪽에 출입문 있는방
 const TopDoorRoom = ({ doors }: { doors: number[] }) => {
-  const [locationClass, setLocationClass] = useRecoilState(locationClassState);
-
-  const setLocationClassWithClick = (id: number) => {
-    setLocationClass(id.toString());
-  };
+  const popUpFloor = useRecoilValue(popUpFloorState);
+  const popUpRoom = useRecoilValue(popUpRoomState);
 
   const topDoorRoom = Array.from({ length: 9 }, (_, i) => i + 1).map(id => {
     if (doors.includes(id)) {
       return (
         <TopDoorSquare
           key={id}
-          onClick={() => setLocationClassWithClick(id)}
           sx={{
-            '&:hover': {
-              '& svg': {
-                color: 'white',
-              },
-            },
+            backgroundColor: DetermineClassColor(
+              popUpFloor,
+              popUpRoom,
+              id.toString()
+            ),
           }}
-        >
-          {locationClass === id.toString() && (
-            <LocationOnIcon
-              sx={{
-                color: '#1976d2',
-                fontSize: 50,
-              }}
-            />
-          )}
-        </TopDoorSquare>
+        />
       );
     }
     return (
       <NormalSquare
         key={id}
-        onClick={() => setLocationClassWithClick(id)}
         sx={{
-          '&:hover': {
-            '& svg': {
-              // 호버일때 아이콘과 배경의 색 반전
-              color: 'white',
-            },
-          },
+          backgroundColor: DetermineClassColor(
+            popUpFloor,
+            popUpRoom,
+            id.toString()
+          ),
         }}
-      >
-        {locationClass === id.toString() && (
-          <LocationOnIcon
-            sx={{
-              color: '#1976d2',
-              fontSize: 50,
-            }}
-          />
-        )}
-      </NormalSquare>
+      />
     );
   });
 
@@ -369,59 +279,35 @@ const TopDoorRoom = ({ doors }: { doors: number[] }) => {
 
 // 아래쪽에 출입문 있는방
 const BottomDoorRoom = ({ doors }: { doors: number[] }) => {
-  const [locationClass, setLocationClass] = useRecoilState(locationClassState);
-
-  const setLocationClassWithClick = (id: number) => {
-    setLocationClass(id.toString());
-  };
+  const popUpFloor = useRecoilValue(popUpFloorState);
+  const popUpRoom = useRecoilValue(popUpRoomState);
 
   const bottomDoorRoom = Array.from({ length: 9 }, (_, i) => i + 1).map(id => {
     if (doors.includes(id)) {
       return (
         <BottomDoorSquare
           key={id}
-          onClick={() => setLocationClassWithClick(id)}
           sx={{
-            '&:hover': {
-              '& svg': {
-                color: 'white',
-              },
-            },
+            backgroundColor: DetermineClassColor(
+              popUpFloor,
+              popUpRoom,
+              id.toString()
+            ),
           }}
-        >
-          {locationClass === id.toString() && (
-            <LocationOnIcon
-              sx={{
-                color: '#1976d2',
-                fontSize: 50,
-              }}
-            />
-          )}
-        </BottomDoorSquare>
+        />
       );
     }
     return (
       <NormalSquare
         key={id}
-        onClick={() => setLocationClassWithClick(id)}
         sx={{
-          '&:hover': {
-            '& svg': {
-              // 호버일때 아이콘과 배경의 색 반전
-              color: 'white',
-            },
-          },
+          backgroundColor: DetermineClassColor(
+            popUpFloor,
+            popUpRoom,
+            id.toString()
+          ),
         }}
-      >
-        {locationClass === id.toString() && (
-          <LocationOnIcon
-            sx={{
-              color: '#1976d2',
-              fontSize: 50,
-            }}
-          />
-        )}
-      </NormalSquare>
+      />
     );
   });
 
@@ -456,14 +342,14 @@ const MakeFrame = (direction: string, doors: number[]) => {
 };
 
 // floor, room 정보를 사용하여 json으로 선언된 출입문 프레임 생성
-const LocateFrame = () => {
-  const floor = useRecoilValue(floorState);
-  const room = useRecoilValue(roomState);
+const ClassFrame = () => {
+  const popUpFloor = useRecoilValue(popUpFloorState);
+  const popUpRoom = useRecoilValue(popUpRoomState);
 
   // Floor 4
-  if (floor === '4' && room !== '') {
+  if (popUpFloor === '4' && popUpRoom !== '') {
     const index = 401;
-    const nDoor: number = parseInt(room, 10);
+    const nDoor: number = parseInt(popUpRoom, 10);
     const doors: number[] = F4ClassFrame.Data[nDoor - index].Door;
     const direction = F4ClassFrame.Data[nDoor - index].Direction;
 
@@ -471,9 +357,9 @@ const LocateFrame = () => {
   }
 
   // Floor 5
-  if (floor === '5' && room !== '') {
+  if (popUpFloor === '5' && popUpRoom !== '') {
     const index = 501;
-    const nDoor: number = parseInt(room, 10);
+    const nDoor: number = parseInt(popUpRoom, 10);
     const doors: number[] = F5ClassFrame.Data[nDoor - index].Door;
     const direction: string = F5ClassFrame.Data[nDoor - index].Direction;
 
@@ -481,9 +367,9 @@ const LocateFrame = () => {
   }
 
   // Floor 6
-  if (floor === '6' && room !== '') {
+  if (popUpFloor === '6' && popUpRoom !== '') {
     const index = 601;
-    const nDoor: number = parseInt(room, 10);
+    const nDoor: number = parseInt(popUpRoom, 10);
     const doors: number[] = F6ClassFrame.Data[nDoor - index].Door;
     const direction = F6ClassFrame.Data[nDoor - index].Direction;
 
@@ -494,4 +380,4 @@ const LocateFrame = () => {
   return null;
 };
 
-export default LocateFrame;
+export default ClassFrame;

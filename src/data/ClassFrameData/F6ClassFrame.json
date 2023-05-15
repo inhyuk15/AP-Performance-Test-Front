@@ -1,0 +1,170 @@
+{
+  "Floor": "6",
+  "Data": [
+    {
+      "Room": "601",
+      "Direction": "LEFT",
+      "Door": [1]
+    },
+    {
+      "Room": "602",
+      "Direction": "LEFT",
+      "Door": [7]
+    },
+    {
+      "Room": "603",
+      "Direction": "LEFT",
+      "Door": [1]
+    },
+    {
+      "Room": "604",
+      "Direction": "LEFT",
+      "Door": [7]
+    },
+    {
+      "Room": "605",
+      "Direction": "LEFT",
+      "Door": [1]
+    },
+    {
+      "Room": "606",
+      "Direction": "LEFT",
+      "Door": [7]
+    },
+    {
+      "Room": "607",
+      "Direction": "LEFT",
+      "Door": [1, 7]
+    },
+    {
+      "Room": "608",
+      "Direction": "LEFT",
+      "Door": [1]
+    },
+    {
+      "Room": "609",
+      "Direction": "LEFT",
+      "Door": [1, 7]
+    },
+    {
+      "Room": "610",
+      "Direction": "LEFT",
+      "Door": [7]
+    },
+    {
+      "Room": "611",
+      "Direction": "LEFT",
+      "Door": [7]
+    },
+    {
+      "Room": "612",
+      "Direction": "LEFT",
+      "Door": [7]
+    },
+    {
+      "Room": "613",
+      "Direction": "LEFT",
+      "Door": [7]
+    },
+    {
+      "Room": "614",
+      "Direction": "LEFT",
+      "Door": [1]
+    },
+    {
+      "Room": "615",
+      "Direction": "TOP",
+      "Door": [1]
+    },
+    {
+      "Room": "616",
+      "Direction": "TOP",
+      "Door": [1]
+    },
+    {
+      "Room": "617",
+      "Direction": "TOP",
+      "Door": [1]
+    },
+    {
+      "Room": "618",
+      "Direction": "TOP",
+      "Door": [3]
+    },
+    {
+      "Room": "619",
+      "Direction": "RIGHT",
+      "Door": [9]
+    },
+    {
+      "Room": "620",
+      "Direction": "RIGHT",
+      "Door": [9]
+    },
+    {
+      "Room": "621",
+      "Direction": "RIGHT",
+      "Door": [9]
+    },
+    {
+      "Room": "622",
+      "Direction": "RIGHT",
+      "Door": [9]
+    },
+    {
+      "Room": "623",
+      "Direction": "RIGHT",
+      "Door": [9]
+    },
+    {
+      "Room": "624",
+      "Direction": "RIGHT",
+      "Door": [9]
+    },
+    {
+      "Room": "625",
+      "Direction": "RIGHT",
+      "Door": [9]
+    },
+    {
+      "Room": "626",
+      "Direction": "RIGHT",
+      "Door": [9]
+    },
+    {
+      "Room": "627",
+      "Direction": "RIGHT",
+      "Door": [3, 9]
+    },
+    {
+      "Room": "628",
+      "Direction": "RIGHT",
+      "Door": [9]
+    },
+    {
+      "Room": "629",
+      "Direction": "RIGHT",
+      "Door": [9]
+    },
+    {
+      "Room": "630",
+      "Direction": "RIGHT",
+      "Door": [3]
+    },
+    {
+      "Room": "631",
+      "Direction": "RIGHT",
+      "Door": [9]
+    },
+    {
+      "Room": "632",
+      "Direction": "RIGHT",
+      "Door": [3]
+    },
+    {
+      "Room": "633",
+      "Direction": "RIGHT",
+      "Door": [3]
+    }
+  ]
+}

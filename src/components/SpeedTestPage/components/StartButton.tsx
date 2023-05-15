@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 import { Box, Button, Dialog, DialogTitle, DialogActions } from '@mui/material';
 import SocketClient, { MeasurementResult } from './SocketClient';
 import {
@@ -8,6 +8,7 @@ import {
   roomState,
   locationClassState,
   cookieState,
+  NetWorkIndexState,
 } from '../../../module/Atom';
 
 const host = import.meta.env.VITE_SERVER_IP;
@@ -17,7 +18,8 @@ const { handleClick } = SocketClient(socketUrl);
 
 const StartButton = () => {
   const [popupOpen, setPopupOpen] = useState<boolean>(false);
-  const setStartToggle = useSetRecoilState(startToggleState);
+  const [startToggle, setStartToggle] = useRecoilState(startToggleState);
+  const setNetWorkIndex = useSetRecoilState(NetWorkIndexState);
   const userCookie = useRecoilValue(cookieState);
 
   // START 버튼 기능 전제조건
@@ -40,11 +42,19 @@ const StartButton = () => {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Content-Type': 'application/json',
-          Cookie: '쿠키이름=쿠키값',
         },
         body: JSON.stringify(dataToSend),
       });
-      console.log(JSON.stringify(measurementResult));
+      console.log('- - - 측 정 정 보 - - -');
+      console.log(measurementResult);
+
+      setNetWorkIndex({
+        avgPing: measurementResult.avgPing,
+        jitter: measurementResult.jitter,
+        upstreamSpeed: measurementResult.upstreamSpeed,
+        downstreamSpeed: measurementResult.downstreamSpeed,
+      });
+
       const result = await response.json();
       console.log('Data sent to server:', result);
     } catch (error) {
@@ -57,7 +67,7 @@ const StartButton = () => {
     if (floorNumber === '' || roomNumber === '' || locationClass === '') {
       setPopupOpen(true);
     } else {
-      setStartToggle(prev => !prev);
+      setStartToggle(false);
 
       try {
         // handleClick() -> 속도 측정 함수
@@ -87,7 +97,7 @@ const StartButton = () => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          height: '15vh',
+          height: '10vh',
         }}
       >
         <Button
@@ -104,6 +114,7 @@ const StartButton = () => {
               backgroundColor: '#FFF',
               color: '#1976d2',
             },
+            height: '50px',
           }}
         >
           START

@@ -19,7 +19,7 @@ const SquareUnit = styled(Box)<SquareUnitProps>`
   /* border: 0.5px solid #000; */
   background-color: ${props => props.backgroundColor};
   &:hover {
-    background-color: gray;
+    background-color: black;
     cursor: pointer;
   }
 
