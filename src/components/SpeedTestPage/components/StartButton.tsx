@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 import { Box, Button, Dialog, DialogTitle, DialogActions } from '@mui/material';
-import SocketClient, { MeasurementResult } from './SocketClient';
 import {
   startToggleState,
   floorState,
@@ -10,11 +9,7 @@ import {
   cookieState,
   NetWorkIndexState,
 } from '../../../module/Atom';
-
-const host = import.meta.env.VITE_SERVER_IP;
-const httpUrl = `http://${host}:3000/api/save_speedtest`;
-const socketUrl = `ws://${host}:3000`;
-const { handleClick } = SocketClient(socketUrl);
+import SpeedtestManager from '../../../librespeed/SpeedtestManager';
 
 const StartButton = () => {
   const [popupOpen, setPopupOpen] = useState<boolean>(false);
@@ -26,41 +21,16 @@ const StartButton = () => {
   const floorNumber = useRecoilValue(floorState);
   const roomNumber = useRecoilValue(roomState);
   const locationClass = useRecoilValue(locationClassState);
+  const { handleClick, pingStatus, jitterStatus, dlStatus, ulStatus } =
+    SpeedtestManager();
+  // () => {
+  //   console.log('select server');
+  // },
+  // () => {
+  //   console.log('on end');
+  // }
 
-  const sendDataToServer = async (measurementResult: MeasurementResult) => {
-    try {
-      const dataToSend = {
-        ...measurementResult,
-        floorNumber,
-        roomNumber,
-        locationClass,
-        userCookie,
-      };
-      const response = await fetch(httpUrl, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(dataToSend),
-      });
-      console.log('- - - 측 정 정 보 - - -');
-      console.log(measurementResult);
-
-      setNetWorkIndex({
-        avgPing: measurementResult.avgPing,
-        jitter: measurementResult.jitter,
-        upstreamSpeed: measurementResult.upstreamSpeed,
-        downstreamSpeed: measurementResult.downstreamSpeed,
-      });
-
-      const result = await response.json();
-      console.log('Data sent to server:', result);
-    } catch (error) {
-      console.error('Error sending data to server:', error);
-    }
-  };
+  // );
 
   // START onClick Func
   const onClickStartButton = async () => {
@@ -71,15 +41,9 @@ const StartButton = () => {
 
       try {
         // handleClick() -> 속도 측정 함수
-        const resultFromMeasurement = await handleClick();
-        await sendDataToServer(resultFromMeasurement);
-
-        console.log(
-          `Average Ping: ${resultFromMeasurement.avgPing}ms, Jitter: ${resultFromMeasurement.jitter}ms`
-        );
-        console.log(
-          `upstream: ${resultFromMeasurement.upstreamSpeed}, downstream: ${resultFromMeasurement.downstreamSpeed}`
-        );
+        handleClick();
+        // const resultFromMeasurement = await handleClick();
+        // await sendDataToServer(resultFromMeasurement);
       } catch (error) {
         console.log(error);
       }
@@ -125,6 +89,18 @@ const StartButton = () => {
             <Button onClick={popupClose}>확인</Button>
           </DialogActions>
         </Dialog>
+        <div>
+          <span>Download: {dlStatus} Mbps</span>
+        </div>
+        <div>
+          <span>Upload: {ulStatus} Mbps</span>
+        </div>
+        <div>
+          <span>Ping: {pingStatus} ms</span>
+        </div>
+        <div>
+          <span>Jitter: {jitterStatus} ms</span>
+        </div>
       </Box>
     </div>
   );
