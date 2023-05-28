@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import Speedtest from './Speedtest';
+import { speedTestDataState } from '../module/Atom';
 // import eventManager from './Speedtest_worker';
 
 export interface SpeedTestData {
@@ -29,60 +31,55 @@ const SPEEDTEST_SERVERS = [
   },
 ];
 
-const SpeedtestManager = () =>
-  // paramOnSelectServer: (arg: void) => void,
-  // paramOnend: (arg: void) => void
-  {
-    // const { onSelectServer, onEnd } = {
-    //   onSelectServer: paramOnSelectServer,
-    //   onEnd: paramOnend,
-    // };
-    const [speedtest, setSpeedtest] = useState<Speedtest | null>(null);
-    const [dlStatus, setDlStatus] = useState<number>(0);
-    const [ulStatus, setUlStatus] = useState<number>(0);
-    const [pingStatus, setPingStatus] = useState<number>(0);
-    const [jitterStatus, setJitterStatus] = useState<number>(0);
+const SpeedtestManager = (
+  paramOnSelectServer: (arg: void) => void,
+  paramOnend: (arg: void) => void
+) => {
+  const { onSelectServer, onEnd } = {
+    onSelectServer: paramOnSelectServer,
+    onEnd: paramOnend,
+  };
+  const [speedtest, setSpeedtest] = useState<Speedtest | null>(null);
+  const [speedTestData, setSpeedtestData] = useRecoilState(speedTestDataState);
+  // const [dlStatus, setDlStatus] = useState<number>(0);
+  // const [ulStatus, setUlStatus] = useState<number>(0);
+  // const [pingStatus, setPingStatus] = useState<number>(0);
+  // const [jitterStatus, setJitterStatus] = useState<number>(0);
 
-    useEffect(() => {
-      const onupdate = (data: SpeedTestData) => {
-        const downloading = data.testState === 1 && data.dlStatus === 0;
-        setDlStatus(downloading ? 0 : data.dlStatus);
-        const uploading = data.testState === 3 && data.ulStatus === 0;
-        setUlStatus(uploading ? 0 : data.ulStatus);
-        setPingStatus(data.pingStatus);
-        setJitterStatus(data.jitterStatus);
-      };
-
-      const onend = (aborted: boolean) => {
-        if (aborted) {
-          console.log('This is aborted');
-          // onEnd();
-        }
-      };
-      const s = new Speedtest(onupdate, onend);
-      setSpeedtest(s);
-
-      s.addTestPoints(SPEEDTEST_SERVERS);
-      s.selectServer(server => {
-        console.log(`server name : ${server.name}`);
-        // onSelectServer();
-      });
-
-      console.log(`ip: ${s.getSelectedServer().server}`);
-    }, []);
-
-    const handleClick = () => {
-      console.log('Clicked');
-      if (speedtest) {
-        if (speedtest.getState() === 3) {
-          speedtest.abort();
-        } else {
-          speedtest.start();
-        }
-      }
+  useEffect(() => {
+    const onupdate = (data: SpeedTestData) => {
+      setSpeedtestData(data);
     };
 
-    return { handleClick, dlStatus, ulStatus, pingStatus, jitterStatus };
+    const onend = (aborted: boolean) => {
+      onEnd();
+      if (aborted) {
+        console.log('This is aborted');
+      }
+    };
+    const s = new Speedtest(onupdate, onend);
+    setSpeedtest(s);
+
+    s.addTestPoints(SPEEDTEST_SERVERS);
+    s.selectServer(server => {
+      console.log(`server name : ${server.name}`);
+      onSelectServer();
+    });
+    // console.log(`ip: ${s.getSelectedServer().server}`);
+  }, []);
+
+  const handleClick = () => {
+    console.log('Clicked');
+    if (speedtest) {
+      if (speedtest.getState() === 3) {
+        speedtest.abort();
+      } else {
+        speedtest.start();
+      }
+    }
   };
+
+  return { handleClick };
+};
 
 export default SpeedtestManager;

@@ -7,28 +7,43 @@ import {
   roomState,
   locationClassState,
   cookieState,
-  NetWorkIndexState,
+  speedTestDataState,
 } from '../../../module/Atom';
 import SpeedtestManager from '../../../librespeed/SpeedtestManager';
 
 const StartButton = () => {
   const [popupOpen, setPopupOpen] = useState<boolean>(false);
   const [startToggle, setStartToggle] = useRecoilState(startToggleState);
-  const setNetWorkIndex = useSetRecoilState(NetWorkIndexState);
-  const userCookie = useRecoilValue(cookieState);
+
+  // const setNetWorkIndex = useSetRecoilState(NetWorkIndexState);
+  // const net = useRecoilValue(NetWorkIndexState);
+
+  // const [netWorkIndex, setNetWorkIndex] = useRecoilState(NetWorkIndexState);
 
   // START 버튼 기능 전제조건
   const floorNumber = useRecoilValue(floorState);
   const roomNumber = useRecoilValue(roomState);
   const locationClass = useRecoilValue(locationClassState);
-  const { handleClick, pingStatus, jitterStatus, dlStatus, ulStatus } =
-    SpeedtestManager();
-  // () => {
-  //   console.log('select server');
-  // },
-  // () => {
-  //   console.log('on end');
-  // }
+  const [speedTestData, setSpeedtestData] = useRecoilState(speedTestDataState);
+  const speedtestManager = SpeedtestManager(
+    () => {
+      console.log('select server');
+    },
+    () => {
+      console.log('on end');
+      // const networkIndex: NetworkIndex = {
+      //   avgPing: pingStatus,
+      //   jitter: jitterStatus,
+      //   downstreamSpeed: dlStatus,
+      //   upstreamSpeed: ulStatus,
+      // };
+      // console.log(networkIndex);
+      // setNetWorkIndex(networkIndex);
+      console.log('endd');
+    }
+  );
+
+  const [handleClick, setHandleClick] = useState(speedtestManager.handleClick);
 
   // );
 
@@ -40,10 +55,7 @@ const StartButton = () => {
       setStartToggle(false);
 
       try {
-        // handleClick() -> 속도 측정 함수
-        handleClick();
-        // const resultFromMeasurement = await handleClick();
-        // await sendDataToServer(resultFromMeasurement);
+        speedtestManager.handleClick();
       } catch (error) {
         console.log(error);
       }
@@ -89,19 +101,22 @@ const StartButton = () => {
             <Button onClick={popupClose}>확인</Button>
           </DialogActions>
         </Dialog>
-        <div>
-          <span>Download: {dlStatus} Mbps</span>
-        </div>
-        <div>
-          <span>Upload: {ulStatus} Mbps</span>
-        </div>
-        <div>
-          <span>Ping: {pingStatus} ms</span>
-        </div>
-        <div>
-          <span>Jitter: {jitterStatus} ms</span>
-        </div>
       </Box>
+      <br />
+      <div>
+        <span>Download: {speedTestData.dlStatus} Mbps</span>
+      </div>
+      <div>
+        <span>Upload: {speedTestData.ulStatus} Mbps</span>
+      </div>
+      <div>
+        <span>Ping: {speedTestData.pingStatus} ms</span>
+      </div>
+      <div>
+        <span>Jitter: {speedTestData.jitterStatus} ms</span>
+      </div>
+
+      <br />
     </div>
   );
 };
