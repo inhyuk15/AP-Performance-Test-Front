@@ -1,11 +1,11 @@
 import { useRecoilValue } from 'recoil';
-import { CssBaseline } from '@mui/material';
+import { CssBaseline, Container } from '@mui/material';
 
 import Infomation from './components/Infomation';
 import LocateFloorRoom from './components/LocateFloorRoom';
 import LocateFrame from './components/LocateFrame';
 import StartButton from './components/StartButton';
-import ShowSpeed from './components/ShowSpeed';
+import ShowSpeed from './components/ShowSpeed/ShowSpeed';
 import Debug from './components/Debug';
 
 import { startToggleState } from '../../module/Atom';
@@ -18,10 +18,10 @@ const SpeedTestPage = () => {
       <CssBaseline />
       <Infomation />
       {startToggle ? (
-        <>
+        <Container>
           <LocateFloorRoom />
           <LocateFrame />
-        </>
+        </Container>
       ) : (
         <ShowSpeed />
       )}

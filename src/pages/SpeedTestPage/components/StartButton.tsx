@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import { Box, Button, Dialog, DialogTitle, DialogActions } from '@mui/material';
 import {
   startToggleState,
   floorState,
   roomState,
   locationClassState,
-  cookieState,
   speedTestDataState,
 } from '../../../module/Atom';
 import SpeedtestManager from '../../../librespeed/SpeedtestManager';
@@ -14,11 +13,6 @@ import SpeedtestManager from '../../../librespeed/SpeedtestManager';
 const StartButton = () => {
   const [popupOpen, setPopupOpen] = useState<boolean>(false);
   const [startToggle, setStartToggle] = useRecoilState(startToggleState);
-
-  // const setNetWorkIndex = useSetRecoilState(NetWorkIndexState);
-  // const net = useRecoilValue(NetWorkIndexState);
-
-  // const [netWorkIndex, setNetWorkIndex] = useRecoilState(NetWorkIndexState);
 
   // START 버튼 기능 전제조건
   const floorNumber = useRecoilValue(floorState);
@@ -31,21 +25,8 @@ const StartButton = () => {
     },
     () => {
       console.log('on end');
-      // const networkIndex: NetworkIndex = {
-      //   avgPing: pingStatus,
-      //   jitter: jitterStatus,
-      //   downstreamSpeed: dlStatus,
-      //   upstreamSpeed: ulStatus,
-      // };
-      // console.log(networkIndex);
-      // setNetWorkIndex(networkIndex);
-      console.log('endd');
     }
   );
-
-  const [handleClick, setHandleClick] = useState(speedtestManager.handleClick);
-
-  // );
 
   // START onClick Func
   const onClickStartButton = async () => {
@@ -90,7 +71,7 @@ const StartButton = () => {
               backgroundColor: '#FFF',
               color: '#1976d2',
             },
-            height: '50px',
+            height: '45px',
           }}
         >
           START
@@ -115,7 +96,6 @@ const StartButton = () => {
       <div>
         <span>Jitter: {speedTestData.jitterStatus} ms</span>
       </div>
-
       <br />
     </div>
   );

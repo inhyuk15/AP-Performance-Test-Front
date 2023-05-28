@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import MainPage from '../components/MainPage/MainPage';
-import SpeedTestPage from '../components/SpeedTestPage/SpeedTestPage';
-import VisualizationPage from '../components/VisualizationPage/VisualizationPage';
+import MainPage from '../pages/MainPage/MainPage';
+import SpeedTestPage from '../pages/SpeedTestPage/SpeedTestPage';
+import VisualizationPage from '../pages/VisualizationPage/VisualizationPage';
 
 const AppRouter: React.FC = () => {
   return (
