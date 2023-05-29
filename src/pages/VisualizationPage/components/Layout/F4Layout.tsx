@@ -39,9 +39,6 @@ const F4Layout: React.FC = () => {
 
   return (
     <div>
-      <Box display="flex" justifyContent="center">
-        <Typography variant="h3">Floor 4</Typography>
-      </Box>
       <Container>
         <SquareBackground
           // Background Color
