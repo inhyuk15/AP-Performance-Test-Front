@@ -2,34 +2,39 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useEffect } from 'react';
 import {
   PositionSpeedMapState,
-  MeasuredDateArrayState,
+  MeasurementDataState,
 } from '../../../module/Atom';
-import GetMeasuredData from './GetMeasuredData';
 
-interface WholeJson {
-  _id: string;
-  avgPing: number;
-  jitter: number;
-  downstreamSpeed: number;
-  upstreamSpeed: number;
-  floorNumber: number;
-  roomNumber: number;
-  locationClass: number;
-  userCookie: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
+import GetMeasuredData, {
+  MeasurementData,
+  SpeedTestDataFromServer,
+} from './GetMeasuredData';
 
-interface NetworkIndex {
-  avgPing: number;
-  jitter: number;
-  downstreamSpeed: number;
-  upstreamSpeed: number;
-}
+// interface WholeJson {
+//   _id: string;
+//   avgPing: number;
+//   jitter: number;
+//   downstreamSpeed: number;
+//   upstreamSpeed: number;
+//   floorNumber: number;
+//   roomNumber: number;
+//   locationClass: number;
+//   userCookie: string;
+//   createdAt: string;
+//   updatedAt: string;
+//   __v: number;
+// }
 
-const SpecifyKey = (obj: WholeJson): string => {
-  const { floorNumber, roomNumber, locationClass } = obj;
+// interface NetworkIndex {
+//   avgPing: number;
+//   jitter: number;
+//   downstreamSpeed: number;
+//   upstreamSpeed: number;
+// }
+
+const SpecifyKey = (obj: MeasurementData): string => {
+  const { user } = obj;
+  const { floorNumber, roomNumber, locationClass } = user;
   return `floorNumber:${floorNumber},roomNumber:${roomNumber},locationClass:${locationClass}`;
 };
 
@@ -37,19 +42,25 @@ const PushDataToMap = () => {
   GetMeasuredData();
   const setPositionSpeedMap = useSetRecoilState(PositionSpeedMapState);
 
-  const jsonData = useRecoilValue(MeasuredDateArrayState);
+  const measurementData = useRecoilValue(MeasurementDataState);
 
   useEffect(() => {
     const updatePositionSpeedMap = () => {
-      const newDataMap = new Map<string, NetworkIndex[]>();
+      const newDataMap = new Map<string, SpeedTestDataFromServer[]>();
+      measurementData.forEach(item => {
+        // console.log('MM', item.speedtest.pingStatus);
+        console.log(item);
+        if (item === undefined || item === null) {
+          console.log('aa');
+        }
 
-      jsonData.forEach(item => {
         const key: string = SpecifyKey(item);
-        const value: NetworkIndex = {
-          avgPing: item.avgPing,
-          jitter: item.jitter,
-          downstreamSpeed: item.downstreamSpeed,
-          upstreamSpeed: item.upstreamSpeed,
+        const value: SpeedTestDataFromServer = {
+          pingStatus: item.speedTest.pingStatus,
+          jitterStatus: item.speedTest.jitterStatus,
+          dlStatus: item.speedTest.dlStatus,
+          ulStatus: item.speedTest.ulStatus,
+          clientIp: item.speedTest.clientIp,
         };
 
         const existingValues = newDataMap.get(key) || [];
@@ -61,7 +72,7 @@ const PushDataToMap = () => {
     };
 
     updatePositionSpeedMap();
-  }, [setPositionSpeedMap, jsonData]);
+  }, [setPositionSpeedMap, measurementData]);
 };
 
 export default PushDataToMap;

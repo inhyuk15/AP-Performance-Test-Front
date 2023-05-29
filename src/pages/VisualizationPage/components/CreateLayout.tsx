@@ -11,11 +11,14 @@ import { SelectChangeEvent } from '@mui/material/Select';
 
 import { useRecoilValue } from 'recoil';
 import { floorState } from '../../../module/Atom';
+import PushDataToMap from './PushDataToMap';
 import F4Layout from './Layout/F4Layout';
 import F5Layout from './Layout/F5Layout';
 import F6Layout from './Layout/F6Layout';
 
 const FloorSelectPage: FC = () => {
+  PushDataToMap();
+
   const userChoosedFloor = useRecoilValue(floorState);
   const [floor, setFloor] = useState<number | null>(
     parseInt(userChoosedFloor, 10)

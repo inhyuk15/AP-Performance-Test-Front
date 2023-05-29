@@ -1,30 +1,51 @@
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { MeasuredDateArrayState } from '../../../module/Atom';
+import { MeasurementDataState } from '../../../module/Atom';
 
-interface MeasuredDate {
-  _id: string;
-  avgPing: number;
-  jitter: number;
-  upstreamSpeed: number;
-  downstreamSpeed: number;
+// interface MeasuredDate {
+//   _id: string;
+//   avgPing: number;
+//   jitter: number;
+//   upstreamSpeed: number;
+//   downstreamSpeed: number;
+//   floorNumber: number;
+//   roomNumber: number;
+//   locationClass: number;
+//   userCookie: string;
+//   createdAt: string;
+//   updatedAt: string;
+//   __v: number;
+// }
+
+interface User {
   floorNumber: number;
   roomNumber: number;
   locationClass: number;
   userCookie: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
 }
 
-const host = import.meta.env.VITE_SERVER_IP;
-const httpUrl = `http://${host}:3000/api/speedtest`;
+export interface SpeedTestDataFromServer {
+  dlStatus: number;
+  ulStatus: number;
+  pingStatus: number;
+  jitterStatus: number;
+  clientIp: string;
+}
+
+export interface MeasurementData {
+  user: User;
+  speedTest: SpeedTestDataFromServer;
+  createdAt: string;
+}
+
+const host = (import.meta as any).env.VITE_SERVER;
+const httpUrl = `http://${host}/api/speedtest`;
 
 const fetchData = async () => {
   try {
     const response = await axios.get(httpUrl);
-    const jsonData: MeasuredDate[] = response.data;
+    const jsonData: MeasurementData[] = response.data;
     return jsonData;
   } catch (error) {
     console.error(error);
@@ -32,16 +53,16 @@ const fetchData = async () => {
   }
 };
 
-const GetMeasuredData = () => {
-  const setMeasuredDateArray = useSetRecoilState(MeasuredDateArrayState);
-
+const GetMeasurementData = () => {
+  const setMeasurementDataState = useSetRecoilState(MeasurementDataState);
   useEffect(() => {
-    const fetchMeasuredData = async () => {
+    const fetchMeasurementData = async () => {
       const jsonData = await fetchData();
-      setMeasuredDateArray(jsonData);
+      console.log(jsonData);
+      setMeasurementDataState(jsonData);
     };
-    fetchMeasuredData();
+    fetchMeasurementData();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 };
 
-export default GetMeasuredData;
+export default GetMeasurementData;

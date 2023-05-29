@@ -24,10 +24,7 @@ interface PopupMessageProps {
 
 const PopupMessage: React.FC<PopupMessageProps> = ({
   open,
-  popUpOpenClick,
   popUpCloseClick,
-  setPopUpFloorState,
-  setPopUpRoomState,
 }) => {
   const popUpFloor = useRecoilValue(popUpFloorState);
   const popUpRoom = useRecoilValue(popUpRoomState);

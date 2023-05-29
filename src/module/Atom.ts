@@ -1,5 +1,9 @@
 import { atom } from 'recoil';
 import { SpeedTestData } from '../librespeed/SpeedtestManager';
+import {
+  MeasurementData,
+  SpeedTestDataFromServer,
+} from '../pages/VisualizationPage/components/GetMeasuredData';
 
 /* Atom */
 export const floorState = atom({
@@ -37,23 +41,23 @@ export const popUpRoomState = atom({
   default: '',
 });
 
-interface MeasuredDate {
-  _id: string;
-  avgPing: number;
-  jitter: number;
-  upstreamSpeed: number;
-  downstreamSpeed: number;
-  floorNumber: number;
-  roomNumber: number;
-  locationClass: number;
-  userCookie: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
+// interface MeasuredDate {
+//   _id: string;
+//   avgPing: number;
+//   jitter: number;
+//   upstreamSpeed: number;
+//   downstreamSpeed: number;
+//   floorNumber: number;
+//   roomNumber: number;
+//   locationClass: number;
+//   userCookie: string;
+//   createdAt: string;
+//   updatedAt: string;
+//   __v: number;
+// }
 
-export const MeasuredDateArrayState = atom<MeasuredDate[]>({
-  key: 'MeasuredDateArrayState',
+export const MeasurementDataState = atom<MeasurementData[]>({
+  key: 'MeasurementDataState',
   default: [],
 });
 
@@ -81,7 +85,9 @@ export const speedTestDataState = atom<SpeedTestData>({
 });
 
 // 시각화 관련
-export const PositionSpeedMapState = atom<Map<string, SpeedTestData[]>>({
+export const PositionSpeedMapState = atom<
+  Map<string, SpeedTestDataFromServer[]>
+>({
   key: 'PositionSpeedMapState',
   default: new Map<string, SpeedTestData[]>(),
 });
