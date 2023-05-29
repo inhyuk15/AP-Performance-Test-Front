@@ -1,14 +1,28 @@
-import React, { useState } from 'react';
-import { useRecoilValue, useRecoilState } from 'recoil';
+import { useEffect, useState } from 'react';
+import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 import { Box, Button, Dialog, DialogTitle, DialogActions } from '@mui/material';
+import axios from 'axios';
 import {
   startToggleState,
   floorState,
   roomState,
   locationClassState,
+  cookieState,
   speedTestDataState,
 } from '../../../module/Atom';
-import SpeedtestManager from '../../../librespeed/SpeedtestManager';
+import SpeedtestManager, {
+  SpeedTestData,
+} from '../../../librespeed/SpeedtestManager';
+
+const host = (import.meta as any).env.VITE_SERVER;
+const httpUrl = `http://${host}/api/save_speedtest`;
+
+export interface SpeedTestWithUserInfoData extends SpeedTestData {
+  floorNumber: string;
+  roomNumber: string;
+  locationClass: string;
+  userCookie: string;
+}
 
 const StartButton = () => {
   const [popupOpen, setPopupOpen] = useState<boolean>(false);
@@ -18,15 +32,54 @@ const StartButton = () => {
   const floorNumber = useRecoilValue(floorState);
   const roomNumber = useRecoilValue(roomState);
   const locationClass = useRecoilValue(locationClassState);
-  const [speedTestData, setSpeedtestData] = useRecoilState(speedTestDataState);
+  const userCookie = useRecoilValue(cookieState);
+
+  const sendDataToServer = async (data: SpeedTestData) => {
+    try {
+      const dataToSend: SpeedTestWithUserInfoData = {
+        ...data,
+        floorNumber,
+        roomNumber,
+        locationClass,
+        userCookie,
+      };
+
+      const response = await axios.post(httpUrl, dataToSend, {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+        },
+      });
+
+      console.log('Data sent to server:', response.data);
+    } catch (error) {
+      console.error('Error sending data to server:', error);
+    }
+  };
+  const [endCalled, setEndCalled] = useState(false);
+
+  const speedTestData = useRecoilValue(speedTestDataState);
   const speedtestManager = SpeedtestManager(
     () => {
       console.log('select server');
     },
     () => {
       console.log('on end');
+      // sendDataToServer(speedTestData);
+      setEndCalled(true);
     }
   );
+  useEffect(() => {
+    if (endCalled) {
+      sendDataToServer(speedTestData);
+      console.log(speedTestData);
+      setEndCalled(false);
+    }
+  }, [endCalled, speedTestData]);
+
+  const [handleClick, setHandleClick] = useState(speedtestManager.handleClick);
+
+  // );
 
   // START onClick Func
   const onClickStartButton = async () => {
@@ -71,7 +124,7 @@ const StartButton = () => {
               backgroundColor: '#FFF',
               color: '#1976d2',
             },
-            height: '45px',
+            height: '50px',
           }}
         >
           START
@@ -83,20 +136,6 @@ const StartButton = () => {
           </DialogActions>
         </Dialog>
       </Box>
-      <br />
-      <div>
-        <span>Download: {speedTestData.dlStatus} Mbps</span>
-      </div>
-      <div>
-        <span>Upload: {speedTestData.ulStatus} Mbps</span>
-      </div>
-      <div>
-        <span>Ping: {speedTestData.pingStatus} ms</span>
-      </div>
-      <div>
-        <span>Jitter: {speedTestData.jitterStatus} ms</span>
-      </div>
-      <br />
     </div>
   );
 };
