@@ -66,6 +66,7 @@ const StartButton = () => {
     () => {
       console.log('on end');
       // sendDataToServer(speedTestData);
+      setStartToggle(true);
       setEndCalled(true);
     }
   );
@@ -77,17 +78,13 @@ const StartButton = () => {
     }
   }, [endCalled, speedTestData]);
 
-  const [handleClick, setHandleClick] = useState(speedtestManager.handleClick);
-
-  // );
-
   // START onClick Func
   const onClickStartButton = async () => {
     if (floorNumber === '' || roomNumber === '' || locationClass === '') {
       setPopupOpen(true);
     } else {
+      // startToggle에 따른 코드 추가
       setStartToggle(false);
-
       try {
         speedtestManager.handleClick();
       } catch (error) {
@@ -122,13 +119,16 @@ const StartButton = () => {
             width: '300px',
             '&:hover': {
               backgroundColor: '#FFF',
-              color: '#1976d2',
+              color: startToggle ? '#1976d2' : '#FF0000',
             },
             height: '50px',
+            backgroundColor: startToggle ? '' : '#FF0000', // Set background color to red when startToggle is false
+            color: startToggle ? '' : '#FFF', // Set text color to white when startToggle is false
           }}
         >
-          START
+          {startToggle ? 'START' : 'Abort'}
         </Button>
+
         <Dialog open={popupOpen} onClose={popupClose}>
           <DialogTitle>위치 설정을 먼저 해주세요.</DialogTitle>
           <DialogActions sx={{ justifyContent: 'center' }}>
