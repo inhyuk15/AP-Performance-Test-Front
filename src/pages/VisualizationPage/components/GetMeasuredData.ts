@@ -3,21 +3,6 @@ import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { MeasurementDataState } from '../../../module/Atom';
 
-// interface MeasuredDate {
-//   _id: string;
-//   avgPing: number;
-//   jitter: number;
-//   upstreamSpeed: number;
-//   downstreamSpeed: number;
-//   floorNumber: number;
-//   roomNumber: number;
-//   locationClass: number;
-//   userCookie: string;
-//   createdAt: string;
-//   updatedAt: string;
-//   __v: number;
-// }
-
 interface User {
   floorNumber: number;
   roomNumber: number;

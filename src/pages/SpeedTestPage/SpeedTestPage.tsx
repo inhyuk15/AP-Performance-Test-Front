@@ -26,7 +26,7 @@ const SpeedTestPage = () => {
         <ShowSpeed />
       )}
       <StartButton />
-      <Debug />
+      {/* <Debug /> */}
     </div>
   );
 };

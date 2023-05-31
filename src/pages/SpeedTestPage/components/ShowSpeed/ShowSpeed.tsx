@@ -39,14 +39,14 @@ const ShowSpeed = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <ResultCard
-              header="Downstream(ms)"
+              header="Download(Mbps)"
               body={dlParam}
               footer={`${speedTestData.dlStatus}`}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <ResultCard
-              header="Upstream(ms)"
+              header="Upload(Mbps)"
               body={ulParam}
               footer={`${speedTestData.ulStatus}`}
             />
