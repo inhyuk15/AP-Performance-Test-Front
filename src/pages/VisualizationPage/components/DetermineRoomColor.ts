@@ -5,7 +5,7 @@ import DetermineColorLabel from './DetermineColorLabel';
 // floor, room을 Input으로 사용하여 평균속도를 계산하고 Color label을 반환한다.
 export const DetermineRoomColor = (floor: number, room: number): string => {
   const filteredData = useRecoilValue(PositionSpeedMapState);
-
+  // console.log(filteredData);
   let totalNumberOfData = 0;
   let totalDownstreamSpeed = 0;
 
@@ -20,7 +20,7 @@ export const DetermineRoomColor = (floor: number, room: number): string => {
       totalNumberOfData += numberOfData;
 
       NetworkIndexArray.forEach(item => {
-        totalDownstreamSpeed += item.downstreamSpeed;
+        totalDownstreamSpeed += item.dlStatus;
       });
     }
   });

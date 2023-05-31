@@ -14,8 +14,8 @@ import F5ClassFrame from '../../../data/ClassFrameData/F5ClassFrame.json';
 import F6ClassFrame from '../../../data/ClassFrameData/F6ClassFrame.json';
 
 const Container = styled(Box)({
-  width: 300,
-  height: 300,
+  width: 285,
+  height: 285,
   display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'center',

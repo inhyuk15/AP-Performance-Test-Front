@@ -26,7 +26,7 @@ export const DetermineClassColor = (
     totalNumberOfData += numberOfData;
 
     NetworkIndexArray.forEach(classItem => {
-      totalDownstreamSpeed += classItem.downstreamSpeed;
+      totalDownstreamSpeed += classItem.dlStatus;
     });
   }
 

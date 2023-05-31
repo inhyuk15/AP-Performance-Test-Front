@@ -9,11 +9,11 @@ import SquareUnit from './SquareUnit';
 import SquareBackground from './SquareBackground';
 import DetermineRoomColor from '../DetermineRoomColor';
 
-import F4LayoutData from '../../../../data/VisualLayoutData/F4LayoutData.json';
+import F6LayoutData from '../../../../data/VisualLayoutData/F6LayoutData.json';
 
 import PopupMessage from '../PopupMessage';
 
-const F4Layout: React.FC = () => {
+const F6Layout: React.FC = () => {
   const [open, setOpen] = useState(false);
   const popUpOpenClick = () => {
     setOpen(true);
@@ -35,25 +35,22 @@ const F4Layout: React.FC = () => {
     }
   };
 
-  const floorNumber = 4;
+  const floorNumber = 6;
 
   return (
     <div>
-      <Box display="flex" justifyContent="center">
-        <Typography variant="h3">Floor 4</Typography>
-      </Box>
       <Container>
         <SquareBackground
           // Background Color
-          width={F4LayoutData.Container.SquareBackground.width}
-          height={F4LayoutData.Container.SquareBackground.height}
-          gridColumn={F4LayoutData.Container.SquareBackground.gridColumn}
-          gridRow={F4LayoutData.Container.SquareBackground.gridRow}
+          width={F6LayoutData.Container.SquareBackground.width}
+          height={F6LayoutData.Container.SquareBackground.height}
+          gridColumn={F6LayoutData.Container.SquareBackground.gridColumn}
+          gridRow={F6LayoutData.Container.SquareBackground.gridRow}
           backgroundColor={
-            F4LayoutData.Container.SquareBackground.backgroundColor
+            F6LayoutData.Container.SquareBackground.backgroundColor
           }
         />
-        {F4LayoutData.Container.SquareUnit.map(unit => {
+        {F6LayoutData.Container.SquareUnit.map(unit => {
           const roomNumber = unit.id;
 
           return (
@@ -86,4 +83,4 @@ const F4Layout: React.FC = () => {
   );
 };
 
-export default F4Layout;
+export default F6Layout;

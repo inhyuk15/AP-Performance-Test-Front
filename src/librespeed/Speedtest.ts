@@ -171,8 +171,7 @@ class Speedtest {
       this.worker.postMessage('status');
 
       // 서버 선택이 안되는중
-      console.log(this.getSelectedServer());
-      console.log('status update');
+      // console.log(this.getSelectedServer());
     }, 200);
 
     if (this.state === 1)

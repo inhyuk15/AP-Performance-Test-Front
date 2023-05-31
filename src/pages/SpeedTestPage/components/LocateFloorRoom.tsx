@@ -28,7 +28,7 @@ const SelectionTheme = createTheme({
 
 const RoomsDefault = () => {
   return (
-    <FormControl fullWidth sx={{ width: '142px' }} margin="normal">
+    <FormControl fullWidth sx={{ width: '140px' }} margin="normal">
       <InputLabel>Room</InputLabel>
       <Select label="Room">
         <MenuItem>층수를 먼저 선택해 주세요.</MenuItem>
@@ -50,11 +50,24 @@ const RoomsValid = ({
   };
 
   return (
-    <FormControl fullWidth sx={{ width: '142px' }} margin="normal">
+    <FormControl fullWidth sx={{ width: '140px' }} margin="normal">
       <InputLabel id={floor}>Room</InputLabel>
-      <Select id={room} value={room} label="Room" onChange={roomChange}>
+      <Select
+        id={room}
+        value={room}
+        label="Room"
+        onChange={roomChange}
+        renderValue={selected => (
+          <div style={{ textAlign: 'center' }}>{selected}호</div>
+        )}
+        sx={{ width: '140px', height: 'px' }}
+      >
         {roomsArray.map(eachRoom => (
-          <MenuItem key={eachRoom} value={eachRoom}>
+          <MenuItem
+            key={eachRoom}
+            value={eachRoom}
+            style={{ justifyContent: 'center' }}
+          >
             {eachRoom}호
           </MenuItem>
         ))}
@@ -104,7 +117,7 @@ const LocateFloorRoom = () => {
 
   return (
     <ThemeProvider theme={SelectionTheme}>
-      <Grid container spacing={2} bgcolor="">
+      <Grid container spacing={1} bgcolor="">
         <Grid
           item
           xs={6}
@@ -116,14 +129,25 @@ const LocateFloorRoom = () => {
         >
           <FormControl
             sx={{
-              width: '142px',
+              width: '140px',
             }}
             margin="normal"
           >
             <InputLabel>Floor</InputLabel>
-            <Select value={floor} label="Floor" onChange={floorChange}>
+            <Select
+              value={floor}
+              label="Floor"
+              onChange={floorChange}
+              renderValue={selected => (
+                <div style={{ textAlign: 'center' }}>{selected}층</div>
+              )}
+            >
               {floorArray.map(eachFloor => (
-                <MenuItem key={eachFloor} value={eachFloor}>
+                <MenuItem
+                  key={eachFloor}
+                  value={eachFloor}
+                  style={{ justifyContent: 'center' }}
+                >
                   {eachFloor}층
                 </MenuItem>
               ))}
@@ -142,7 +166,6 @@ const LocateFloorRoom = () => {
           <RoomSplit floor={floor} />
         </Grid>
       </Grid>
-      <br />
     </ThemeProvider>
   );
 };

@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 import { Box, Button, Dialog, DialogTitle, DialogActions } from '@mui/material';
+import axios from 'axios';
 import {
   startToggleState,
   floorState,
@@ -9,51 +10,81 @@ import {
   cookieState,
   speedTestDataState,
 } from '../../../module/Atom';
-import SpeedtestManager from '../../../librespeed/SpeedtestManager';
+import SpeedtestManager, {
+  SpeedTestData,
+} from '../../../librespeed/SpeedtestManager';
+
+const host = (import.meta as any).env.VITE_SERVER;
+const httpUrl = `http://${host}/api/save_speedtest`;
+
+export interface SpeedTestWithUserInfoData extends SpeedTestData {
+  floorNumber: string;
+  roomNumber: string;
+  locationClass: string;
+  userCookie: string;
+}
 
 const StartButton = () => {
   const [popupOpen, setPopupOpen] = useState<boolean>(false);
   const [startToggle, setStartToggle] = useRecoilState(startToggleState);
 
-  // const setNetWorkIndex = useSetRecoilState(NetWorkIndexState);
-  // const net = useRecoilValue(NetWorkIndexState);
-
-  // const [netWorkIndex, setNetWorkIndex] = useRecoilState(NetWorkIndexState);
-
   // START 버튼 기능 전제조건
   const floorNumber = useRecoilValue(floorState);
   const roomNumber = useRecoilValue(roomState);
   const locationClass = useRecoilValue(locationClassState);
-  const [speedTestData, setSpeedtestData] = useRecoilState(speedTestDataState);
+  const userCookie = useRecoilValue(cookieState);
+
+  const sendDataToServer = async (data: SpeedTestData) => {
+    try {
+      const dataToSend: SpeedTestWithUserInfoData = {
+        ...data,
+        floorNumber,
+        roomNumber,
+        locationClass,
+        userCookie,
+      };
+
+      const response = await axios.post(httpUrl, dataToSend, {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+        },
+      });
+
+      console.log('Data sent to server:', response.data);
+    } catch (error) {
+      console.error('Error sending data to server:', error);
+    }
+  };
+  const [endCalled, setEndCalled] = useState(false);
+
+  const speedTestData = useRecoilValue(speedTestDataState);
   const speedtestManager = SpeedtestManager(
     () => {
       console.log('select server');
     },
     () => {
       console.log('on end');
-      // const networkIndex: NetworkIndex = {
-      //   avgPing: pingStatus,
-      //   jitter: jitterStatus,
-      //   downstreamSpeed: dlStatus,
-      //   upstreamSpeed: ulStatus,
-      // };
-      // console.log(networkIndex);
-      // setNetWorkIndex(networkIndex);
-      console.log('endd');
+      // sendDataToServer(speedTestData);
+      setStartToggle(true);
+      setEndCalled(true);
     }
   );
-
-  const [handleClick, setHandleClick] = useState(speedtestManager.handleClick);
-
-  // );
+  useEffect(() => {
+    if (endCalled) {
+      sendDataToServer(speedTestData);
+      console.log(speedTestData);
+      setEndCalled(false);
+    }
+  }, [endCalled, speedTestData]);
 
   // START onClick Func
   const onClickStartButton = async () => {
     if (floorNumber === '' || roomNumber === '' || locationClass === '') {
       setPopupOpen(true);
     } else {
+      // startToggle에 따른 코드 추가
       setStartToggle(false);
-
       try {
         speedtestManager.handleClick();
       } catch (error) {
@@ -88,13 +119,16 @@ const StartButton = () => {
             width: '300px',
             '&:hover': {
               backgroundColor: '#FFF',
-              color: '#1976d2',
+              color: startToggle ? '#1976d2' : '#FF0000',
             },
             height: '50px',
+            backgroundColor: startToggle ? '' : '#FF0000', // Set background color to red when startToggle is false
+            color: startToggle ? '' : '#FFF', // Set text color to white when startToggle is false
           }}
         >
-          START
+          {startToggle ? 'START' : 'Abort'}
         </Button>
+
         <Dialog open={popupOpen} onClose={popupClose}>
           <DialogTitle>위치 설정을 먼저 해주세요.</DialogTitle>
           <DialogActions sx={{ justifyContent: 'center' }}>
@@ -102,21 +136,6 @@ const StartButton = () => {
           </DialogActions>
         </Dialog>
       </Box>
-      <br />
-      <div>
-        <span>Download: {speedTestData.dlStatus} Mbps</span>
-      </div>
-      <div>
-        <span>Upload: {speedTestData.ulStatus} Mbps</span>
-      </div>
-      <div>
-        <span>Ping: {speedTestData.pingStatus} ms</span>
-      </div>
-      <div>
-        <span>Jitter: {speedTestData.jitterStatus} ms</span>
-      </div>
-
-      <br />
     </div>
   );
 };

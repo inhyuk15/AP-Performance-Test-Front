@@ -17,7 +17,7 @@ export interface SpeedTestData {
   testId: string;
 }
 
-const host = (import.meta as any).env.VITE_SERVER;
+const host = `//${(import.meta as any).env.VITE_SERVER}/`;
 // const host =
 const SPEEDTEST_SERVERS = [
   {
