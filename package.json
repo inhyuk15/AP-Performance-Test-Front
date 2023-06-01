@@ -6,20 +6,26 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview",
+    "serve": "vite preview --port 5173",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src/",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx src/ --fix"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.0",
     "@emotion/styled": "11.10.6",
     "@mui/icons-material": "^5.10.6",
     "@mui/material": "5.11.15",
     "@mui/styled-engine": "^5.11.11",
+    "@types/uuid": "^9.0.1",
+    "axios": "^1.4.0",
+    "esbuild": "^0.17.19",
     "react": "^18.2.0",
+    "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.9.0",
     "recoil": "^0.7.7",
-    "socket.io-client": "4.6.1"
+    "socket.io-client": "4.6.1",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",
