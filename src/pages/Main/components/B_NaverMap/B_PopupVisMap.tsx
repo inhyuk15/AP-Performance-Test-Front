@@ -49,7 +49,7 @@ const PopupVisMap: React.FC<PopupVisMapProps> = ({
         <CreateVisMap />
       </DialogContent>
       <StyledDialogActions>
-        <Button variant="outlined" onClick={handleClose} color="primary">
+        <Button variant="outlined" onClick={handleClose}>
           닫기
         </Button>
       </StyledDialogActions>
