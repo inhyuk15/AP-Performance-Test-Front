@@ -21,13 +21,13 @@ const StyledSGrid = styled(Grid)({
 const LinkButtonWrapper = () => {
   return (
     <StyledBox>
-      <Grid container spacing={2}>
-        <StyledFGrid item xs={6}>
+      <Grid container justifyContent="center">
+        <StyledFGrid>
           <LinkButton to="/speed-test" label="측정하기" />
         </StyledFGrid>
-        <StyledSGrid item xs={6}>
+        {/* <StyledSGrid item xs={6}>
           <LinkButton to="/visualization" label="속도지도" />
-        </StyledSGrid>
+        </StyledSGrid> */}
       </Grid>
     </StyledBox>
   );
