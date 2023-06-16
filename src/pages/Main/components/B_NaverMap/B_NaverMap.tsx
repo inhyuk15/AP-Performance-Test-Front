@@ -86,7 +86,7 @@ const NaverMap = () => {
         });
 
         const infoWindow = new window.naver.maps.InfoWindow({
-          content: `<div style="width:150px;text-align:center;padding:10px;">${peopleCntInBuilding[key]}명</b>.</div>`,
+          content: `<div style="width:150px;text-align:center;padding:10px;">${peopleCntInBuilding[key]}명</b></div>`,
         });
 
         markers.push(marker);
