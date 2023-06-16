@@ -32,7 +32,8 @@ const DetermineColorLabel = (dlStatus: number): string => {
     return Black;
   }
   const thresholds = [
-    80, 70, 65, 60, 55, 50, 45, 40, 35, 30, 26, 22, 18, 14, 10, 7, 5, 3, 5, 0,
+    100, 95, 90, 85, 80, 70, 60, 50, 45, 40, 35, 30, 26, 22, 18, 14, 10, 7, 5,
+    3,
   ];
 
   const colorIndex = thresholds.findIndex(threshold => dlStatus >= threshold);
