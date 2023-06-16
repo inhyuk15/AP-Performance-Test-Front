@@ -2,19 +2,19 @@
   font-family: 'NanumSquareRoundL';
   font-style: normal;
   font-weight: 100;
-  src: url('./NanumSquareRoundL.woff') format('woff');
+  src: url('./NanumSquareRoundL.tff') format('tff');
 }
 
 @font-face {
   font-family: 'NanumSquareRoundB';
   font-style: normal;
   font-weight: 100;
-  src: url('./NanumSquareRoundB.woff') format('woff');
+  src: url('./NanumSquareRoundB.tff') format('tff');
 }
 
 @font-face {
   font-family: 'NanumSquareRoundEB';
   font-style: normal;
   font-weight: 100;
-  src: url('./NanumSquareRoundEB.woff') format('woff');
+  src: url('./NanumSquareRoundEB.tff') format('tff');
 }

@@ -1,7 +1,7 @@
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
 import { useState, useEffect } from 'react';
-import { Button } from '@mui/material';
+import { Container } from '@mui/material';
 import PopupVisMap from './B_PopupVisMap';
 import { BUILDING_POSITION, setPeopleCntInBuilding } from './buildingInfo';
 
@@ -167,7 +167,14 @@ const NaverMap = () => {
         open={popupOpen}
         popUpCloseClick={popupCloseClick}
       />
-      <div id="map" style={{ width: '100%', height: '300px' }} />
+      <Container
+        id="map"
+        sx={{
+          width: '60%',
+          height: '600px',
+          textAlign: 'center',
+        }}
+      />
     </div>
   );
 };

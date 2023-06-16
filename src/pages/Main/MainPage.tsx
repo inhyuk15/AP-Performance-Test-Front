@@ -3,6 +3,7 @@ import { CssBaseline } from '@mui/material';
 
 import Header from './components/Header';
 import Body from './components/Body';
+import Footer from './components/Footer';
 
 import { maxWidth } from '../../constant/constants';
 
@@ -41,6 +42,7 @@ const MainPage = () => {
       <CssBaseline />
       <Header />
       <Body />
+      <Footer />
     </ThemeProvider>
   );
 };
