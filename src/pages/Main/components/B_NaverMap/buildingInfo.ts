@@ -62,13 +62,14 @@ export const BUILDING_POSITION = {
   노천극장: [36.365486, 127.342326],
   사범대: [36.368181, 127.340347],
 };
+
 export interface IPeopleCntInBuilding {
-  [location: string]: number | string;
+  [location: string]: number;
 }
 
 interface IApiResponse {
   outblock: Array<{ MSG: number }>;
-  RESULT: Array<{ location: string; client: number }>;
+  RESULT: IPeopleCntInBuilding;
 }
 
 const fetchJsonFromUrl = async (url: string): Promise<IApiResponse> => {
@@ -89,22 +90,23 @@ const httpUrl = `http://${host}/api/pulse_cnt`;
 export const setPeopleCntInBuilding = async (
   peopleCntInBuilding: IPeopleCntInBuilding
 ): Promise<IPeopleCntInBuilding> => {
-  const updatedPeopleCnt = { ...peopleCntInBuilding };
+  const updatedPeopleCnt: IPeopleCntInBuilding = { ...peopleCntInBuilding };
   try {
     const fetchData = await fetchJsonFromUrl(httpUrl);
-    Object.entries(fetchData.RESULT).forEach(([location, client]) => {
-      Object.entries(BUILDING_POSITION).forEach(([key]) => {
-        if (location.includes(key)) {
-          const currentCount = Number(updatedPeopleCnt[key]) || 0;
-          updatedPeopleCnt[key] = updatedPeopleCnt[key]
-            ? currentCount + Number(client)
-            : Number(client);
+    const peopleCntData = fetchData.RESULT;
+    Object.entries(peopleCntData).forEach(([location, client]) => {
+      const matchingKey = Object.keys(BUILDING_POSITION).find(key =>
+        location.includes(key)
+      );
+      if (matchingKey) {
+        if (!updatedPeopleCnt.hasOwnProperty(matchingKey)) {
+          updatedPeopleCnt[matchingKey] = 0;
         }
-      });
+        updatedPeopleCnt[matchingKey] = Number(client);
+      }
     });
   } catch (error) {
     console.error('Failed to fetch data: ', error);
-
     // If fetching fails, initialize every key to 0
     Object.keys(BUILDING_POSITION).forEach(key => {
       updatedPeopleCnt[key] = 0;

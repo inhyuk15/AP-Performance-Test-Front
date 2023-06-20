@@ -3,7 +3,11 @@
 import { useState, useEffect } from 'react';
 import { Container } from '@mui/material';
 import PopupVisMap from './B_PopupVisMap';
-import { BUILDING_POSITION, setPeopleCntInBuilding } from './buildingInfo';
+import {
+  BUILDING_POSITION,
+  setPeopleCntInBuilding,
+  IPeopleCntInBuilding,
+} from './buildingInfo';
 
 declare global {
   interface Window {
@@ -15,7 +19,10 @@ const NaverMap = () => {
   const [buildingName, setBuildingName] = useState(`building`);
   const [popupOpen, setPopupOpen] = useState(false);
   const [isMapLoaded, setMapLoaded] = useState(false);
-  const [peopleCntInBuilding, setPeopleCnt] = useState({});
+  const [isCntLoaded, setCntLoaded] = useState(false);
+  const [peopleCntInBuilding, setPeopleCnt] = useState<IPeopleCntInBuilding>(
+    {}
+  );
   // const [isUserCntLoaded, setUserCntLoaded] = useState(false);
   const popupOpenClick = () => {
     setPopupOpen(true);
@@ -29,10 +36,11 @@ const NaverMap = () => {
         peopleCntInBuilding
       );
       setPeopleCnt(updatedPeopleCnt);
+      setCntLoaded(true);
     };
 
     fetchPeopleCnt();
-  }, []); // Empty dependency array if you want to fetch only once when the component mounts.
+  }, [peopleCntInBuilding, setCntLoaded]);
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -52,7 +60,7 @@ const NaverMap = () => {
 
   // map의 marker관련 로직
   useEffect(() => {
-    if (isMapLoaded && window.naver && window.naver.maps) {
+    if (isCntLoaded && isMapLoaded && window.naver && window.naver.maps) {
       const cnuRange = new window.naver.maps.LatLngBounds(
         new window.naver.maps.LatLng(36.363848, 127.339154),
         new window.naver.maps.LatLng(36.371013, 127.3482)
@@ -158,7 +166,7 @@ const NaverMap = () => {
         updateMarkers(map, markers);
       });
     }
-  }, [isMapLoaded]);
+  }, [isCntLoaded, isMapLoaded]);
 
   return (
     <div>
