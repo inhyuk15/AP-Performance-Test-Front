@@ -1,13 +1,9 @@
 FROM node:14
 
+COPY . /app
+
 WORKDIR /app
 
-COPY package*.json ./
-COPY .env ./
-COPY vite.config.ts ./
-
-RUN npm install
-
-COPY . .
+RUN npm install && npm run build
 
 CMD ["npm", "run", "serve"]
