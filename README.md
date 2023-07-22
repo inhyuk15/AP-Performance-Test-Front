@@ -4,7 +4,7 @@ measure internet speed and visualize cnu's internet speed generally.
 
 ![test](https://github.com/ap-performance-test/AP-Performance-Test-Front/assets/78422003/64f61783-2ed9-4003-98e3-a1fa9b658277)
 
-![visualize]([https://github.com/ap-performance-test/AP-Performance-Test-Front/assets/78422003/b39c3613-345a-408b-a88c-82451483a699](https://github.com/ap-performance-test/AP-Performance-Test-Front/assets/78422003/7a448f66-7e25-42fa-abbd-857c1d3c9823))
+![visualize](https://github.com/ap-performance-test/AP-Performance-Test-Front/assets/78422003/7a448f66-7e25-42fa-abbd-857c1d3c9823)
 
 ## Deploying: http://3.34.130.16:5173/
 
