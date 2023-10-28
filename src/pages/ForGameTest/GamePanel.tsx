@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 import { Grid } from '@mui/material';
-import { useRecoilValue } from 'recoil';
 import GameBanner from './GameBanner';
 import RecommendPerfBox from './RecommendPerfBox';
 import SubmitButton from './SubmitButton';
-import { OverWatchInfo } from './GamesInfo';
-import { startToggleState } from '../../recoil/Atom';
 import SpeedtestManager from '../../librespeed/SpeedtestManager';
+import { GameInfoType } from './GamesInfo';
 
-const GamePanel = () => {
+interface GamePanelProps {
+  gameInfo: GameInfoType;
+}
+
+const GamePanel = ({ gameInfo }: GamePanelProps) => {
   const {
     name,
     url,
     measurment: { ping, upstream, downstream },
-  } = OverWatchInfo;
+  } = gameInfo;
+
   const [measureEndCalled, setMeasureEndCalled] = useState(false);
   const speedtestManager = SpeedtestManager(
     () => {
