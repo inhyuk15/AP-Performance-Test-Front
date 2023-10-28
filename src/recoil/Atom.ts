@@ -116,11 +116,19 @@ export const dayOfWeekState = atom<number>({
   default: -1,
 });
 
-export const resultSummaryState = atom({
+export type Evaluation = 'bad' | 'notBad' | 'good' | 'testOngoing';
+
+export interface ResultSummaryType {
+  pingEvaluation: Evaluation;
+  upstreamEvaluation: Evaluation;
+  downstreamEvaluation: Evaluation;
+}
+
+export const resultSummaryState = atom<ResultSummaryType>({
   key: 'resultSummaryState',
   default: {
-    pingEvaluation: '',
-    upstreamEvaluation: '',
-    downstreamEvaluation: '',
+    pingEvaluation: 'testOngoing',
+    upstreamEvaluation: 'testOngoing',
+    downstreamEvaluation: 'testOngoing',
   },
 });

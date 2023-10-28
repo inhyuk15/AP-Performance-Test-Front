@@ -55,14 +55,23 @@ const Triangle = styled('div')({
   transform: 'translateX(-50%)',
 });
 
+const GaugeText = styled('span')({
+  position: 'absolute',
+  fontSize: '22px',
+  bottom: '-40px',
+  transform: 'translateY(-50%)',
+});
+
 const ResultGraph = ({ value }: GaugeBarProps) => {
   return (
     <StyledGauge>
+      <GaugeText style={{ left: 0 }}>Bad</GaugeText>
       <LeftSection bgcolor="#FF4136" />
       <MiddleSection bgcolor="#FF851B" />
       <MiddleSection bgcolor="#FFDC00" />
       <MiddleSection bgcolor="#01FF70" />
       <RightSection bgcolor="#2ECC40" />
+      <GaugeText style={{ right: 0 }}>Good</GaugeText>
       <Triangle style={{ left: `${value}%` }} />
     </StyledGauge>
   );

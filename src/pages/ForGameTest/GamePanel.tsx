@@ -1,11 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Grid } from '@mui/material';
-import {
-  useRecoilCallback,
-  useRecoilSnapshot,
-  useRecoilState,
-  useRecoilValue,
-} from 'recoil';
+import { useRecoilCallback } from 'recoil';
 import GameBanner from './GameBanner';
 import RecommendPerfBox from './RecommendPerfBox';
 import SubmitButton from './SubmitButton';
@@ -28,13 +23,12 @@ const evaluatePerformance = (userValue: number, gameValue: string) => {
   const percentage = (userValue / extractNumber(gameValue)) * 100;
 
   if (percentage >= 80) {
-    return 'Good';
+    return 'good';
   }
   if (percentage >= 40 && percentage < 80) {
-    return 'NotBad';
+    return 'notBad';
   }
-  console.log(percentage);
-  return 'Bad';
+  return 'bad';
 };
 
 const GamePanel = ({ gameInfo }: GamePanelProps) => {
@@ -43,12 +37,14 @@ const GamePanel = ({ gameInfo }: GamePanelProps) => {
     url,
     measurment: { ping, upstream, downstream },
   } = gameInfo;
-  // const speedTestData = useRecoilValue(speedTestDataFromServerState);
-  const [speedTestData, setSpeedTestData] = useRecoilState(
-    speedTestDataFromServerState
-  );
 
-  const compareRequirements = (curSpeedTestData: any) => {
+  interface SpeedTestData {
+    pingStatus: number;
+    ulStatus: number;
+    dlStatus: number;
+  }
+
+  const compareRequirements = (curSpeedTestData: SpeedTestData) => {
     const gamePing = gameInfo.measurment.ping.recommended;
     const gameUpstream = gameInfo.measurment.upstream.recommended;
     const gameDownstream = gameInfo.measurment.downstream.recommended;
@@ -73,9 +69,9 @@ const GamePanel = ({ gameInfo }: GamePanelProps) => {
   };
   const handleOnStart = useRecoilCallback(({ set }) => () => {
     set(resultSummaryState, {
-      pingEvaluation: 'test ongoing',
-      upstreamEvaluation: 'test ongoing',
-      downstreamEvaluation: 'test ongoing',
+      pingEvaluation: 'testOngoing',
+      upstreamEvaluation: 'testOngoing',
+      downstreamEvaluation: 'testOngoing',
     });
   });
 
