@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Grid } from '@mui/material';
 import { styled } from '@mui/system';
 import ShowSpeed from '../../Speedtest/components/B_Show_Speed/B_ShowSpeed';

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from '@mui/material';
 import { styled } from '@mui/system';
+import { Link } from 'react-router-dom';
 
 const StyledButton = styled(Button)`
   margin-top: 15px;
@@ -21,12 +22,23 @@ const CenteredContainer = styled('div')`
 
 interface ButtonProps {
   text: string;
+  url: string;
+  onClick: () => void;
 }
 
-const SubmitButton = ({ text }: ButtonProps) => {
+const SubmitButton = ({ text, url, onClick }: ButtonProps) => {
   return (
     <CenteredContainer>
-      <StyledButton variant="contained"> {text} </StyledButton>
+      <Link
+        to={url}
+        onClick={e => {
+          if (onClick) {
+            onClick();
+          }
+        }}
+      >
+        <StyledButton variant="contained">{text}</StyledButton>
+      </Link>
     </CenteredContainer>
   );
 };
