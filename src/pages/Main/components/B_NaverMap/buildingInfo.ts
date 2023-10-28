@@ -99,9 +99,6 @@ export const setPeopleCntInBuilding = async (
         location.includes(key)
       );
       if (matchingKey) {
-        if (!updatedPeopleCnt.hasOwnProperty(matchingKey)) {
-          updatedPeopleCnt[matchingKey] = 0;
-        }
         updatedPeopleCnt[matchingKey] = Number(client);
       }
     });
