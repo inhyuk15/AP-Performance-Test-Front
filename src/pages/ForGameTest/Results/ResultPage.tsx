@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Grid } from '@mui/material';
 import { styled } from '@mui/system';
+import { useRecoilValue } from 'recoil';
 import ShowSpeed from '../../Speedtest/components/B_Show_Speed/B_ShowSpeed';
 import ResultGraph from './ResultGraph';
 import ResultSummary from './ResultSummary';
+import { resultSummaryState } from '../../../recoil/Atom';
+import GameBanner from '../GameBanner';
 
 const ResultPageContainer = styled(Container)({
   height: '100vh',
@@ -34,6 +37,12 @@ const GraphContainer = styled(Grid)({
 });
 
 const ResultPage = () => {
+  const resultSummary = useRecoilValue(resultSummaryState);
+  console.log(
+    resultSummary.downstreamEvaluation +
+      resultSummary.pingEvaluation +
+      resultSummary.upstreamEvaluation
+  );
   return (
     <ResultPageContainer>
       <Grid container spacing={3}>
@@ -44,9 +53,11 @@ const ResultPage = () => {
           <SummaryContainer item>
             <ResultSummary />
           </SummaryContainer>
-          <Spacer item />
+          <Spacer item>
+            <GameBanner name="overwath good" url="./overwatchGood.jpeg" />
+          </Spacer>
           <GraphContainer item>
-            <ResultGraph value={50} />
+            <ResultGraph value={80} />
           </GraphContainer>
         </ResultContainer>
       </Grid>

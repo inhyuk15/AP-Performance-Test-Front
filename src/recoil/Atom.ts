@@ -115,3 +115,12 @@ export const dayOfWeekState = atom<number>({
   key: 'dayOfWeekState',
   default: -1,
 });
+
+export const resultSummaryState = atom({
+  key: 'resultSummaryState',
+  default: {
+    pingEvaluation: '',
+    upstreamEvaluation: '',
+    downstreamEvaluation: '',
+  },
+});
