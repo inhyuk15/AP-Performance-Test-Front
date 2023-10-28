@@ -1,11 +1,11 @@
 const OverWatchInfo = {
   name: 'overwatch',
+  url: './OverWatch.jpg',
   measurment: {
     upstream: { minimum: '100ms', recommended: '150ms' },
     downstream: { minimum: '100ms', recommended: '150ms' },
     ping: { minimum: '100ms', recommended: '150ms' },
   },
-  url: './OverWatch.jpg',
 };
 
 const LOLInfo = {
