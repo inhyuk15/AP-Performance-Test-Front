@@ -1,9 +1,13 @@
 // 현재 Recoil에 담긴 (측정된)데이터를 Server에 보내는 함수
 import axios from 'axios';
-import { SpeedTestWithUserInfoData } from '../../../../recoil/Atom';
+import { useRecoilState } from 'recoil';
+import {
+  SpeedTestWithUserInfoData,
+  measureEndState,
+} from '../../../../recoil/Atom';
 
-const host = (import.meta as any).env.VITE_SERVER;
-const httpUrl = `http://${host}/api/save_speedtest`;
+const host = (import.meta as any).env.VITE_DATA_SERVER;
+const httpUrl = `http://${host}/measurement-result`;
 
 const SendDataToServer = async (AssembledData: SpeedTestWithUserInfoData) => {
   try {

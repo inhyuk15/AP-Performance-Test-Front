@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import Speedtest from './Speedtest';
 import {
   SpeedTestDataFromServer,
+  measureEndState,
   speedTestDataFromServerState,
 } from '../recoil/Atom';
 
-const host = `//${(import.meta as any).env.VITE_SERVER}/`;
+const host = `//${(import.meta as any).env.VITE_SPEED_SERVER}/`;
 // const host =
 const SPEEDTEST_SERVERS = [
   {
@@ -30,14 +31,16 @@ const SpeedtestManager = (
   };
   const [speedtest, setSpeedtest] = useState<Speedtest | null>(null);
   const setSpeedtestData = useSetRecoilState(speedTestDataFromServerState);
-
+  const [measureEnd, setMeasureEnd] = useRecoilState(measureEndState);
   useEffect(() => {
     const onupdate = (data: SpeedTestDataFromServer) => {
       setSpeedtestData(data);
+      setMeasureEnd(false);
     };
 
     const onend = (aborted: boolean) => {
       onEnd();
+      setMeasureEnd(true);
       if (aborted) {
         console.log('This is aborted');
       }

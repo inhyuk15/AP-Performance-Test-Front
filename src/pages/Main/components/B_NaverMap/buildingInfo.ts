@@ -85,7 +85,7 @@ const fetchJsonFromUrl = async (url: string): Promise<IApiResponse> => {
 };
 
 const host = (import.meta as any).env.VITE_SERVER;
-const httpUrl = `http://${host}/api/pulse_cnt`;
+const httpUrl = `http://52.79.237.75:3011/pulse_cnt`;
 
 export const setPeopleCntInBuilding = async (
   peopleCntInBuilding: IPeopleCntInBuilding

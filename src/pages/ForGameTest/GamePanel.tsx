@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid } from '@mui/material';
-import { useRecoilCallback } from 'recoil';
+import { useRecoilCallback, useRecoilState } from 'recoil';
 import GameBanner from './GameBanner';
 import RecommendPerfBox from './RecommendPerfBox';
 import SubmitButton from './SubmitButton';
@@ -9,7 +9,10 @@ import { GameInfoType } from './GamesInfo';
 import {
   resultSummaryState,
   speedTestDataFromServerState,
+  measureEndState,
 } from '../../recoil/Atom';
+import useMakeMesuredData from '../../hooks/useMakeMesuredData';
+import SendDataToServer from '../Speedtest/components/DataServer/SendDataToServer';
 
 interface GamePanelProps {
   gameInfo: GameInfoType;
@@ -88,9 +91,11 @@ const GamePanel = ({ gameInfo }: GamePanelProps) => {
       downstreamEvaluation,
     });
   });
+  // const [measureEnd, setMeasureEnd] = useRecoilState(measureEndState);
   const speedtestManager = SpeedtestManager(handleOnStart, handleOnEnd);
 
   const onClickStartButton = async () => {
+    // setMeasureEnd(false);
     speedtestManager.handleClick();
   };
 

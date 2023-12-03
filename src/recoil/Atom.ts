@@ -43,19 +43,19 @@ export interface SpeedTestWithUserInfoData extends SpeedTestDataFromServer {
 // 사용자 층수
 export const floorState = atom({
   key: 'floorState',
-  default: '',
+  default: 0,
 });
 
 // 사용자 호수
 export const roomState = atom({
   key: 'roomState',
-  default: '',
+  default: 0,
 });
 
 // 사용자 위치 클래스
 export const locationClassState = atom({
   key: 'locationClassState',
-  default: '',
+  default: 0,
 });
 
 // Start 버튼 토글 현황
@@ -131,4 +131,9 @@ export const resultSummaryState = atom<ResultSummaryType>({
     upstreamEvaluation: 'testOngoing',
     downstreamEvaluation: 'testOngoing',
   },
+});
+
+export const measureEndState = atom<boolean>({
+  key: 'measureEndState',
+  default: false,
 });

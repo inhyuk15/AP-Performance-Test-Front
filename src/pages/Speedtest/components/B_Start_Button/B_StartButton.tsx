@@ -7,7 +7,7 @@ import SpeedtestManager from '../../../../librespeed/SpeedtestManager';
 
 import useCheckUserSelect from '../../../../hooks/useCheckUserSelect';
 import useMakeMesuredData from '../../../../hooks/useMakeMesuredData';
-import SendDataToServer from '../func/SendDataToServer';
+import SendDataToServer from '../DataServer/SendDataToServer';
 
 import StartButtonPopUp from './B_StartButtonPopUp';
 

@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Grid, Typography } from '@mui/material';
 import { styled } from '@mui/system';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import ShowSpeed from '../../Speedtest/components/B_Show_Speed/B_ShowSpeed';
 import ResultGraph from './ResultGraph';
 import ResultSummary from './ResultSummary';
-import { Evaluation, resultSummaryState } from '../../../recoil/Atom';
+import {
+  Evaluation,
+  resultSummaryState,
+  measureEndState,
+} from '../../../recoil/Atom';
 import GameBanner from '../GameBanner';
+import useMakeMesuredData from '../../../hooks/useMakeMesuredData';
+import SendDataToServer from '../../Speedtest/components/DataServer/SendDataToServer';
 
 const ResultPageContainer = styled(Container)({
   height: '100vh',
@@ -64,6 +70,15 @@ const calculateTotalScore = (evaluations: Evaluation[]): number => {
 
 const ResultPage = () => {
   const resultSummary = useRecoilValue(resultSummaryState);
+  const [measureEnd, setMeasureEnd] = useRecoilState(measureEndState);
+  const makedSendData = useMakeMesuredData();
+
+  useEffect(() => {
+    if (measureEnd) {
+      SendDataToServer(makedSendData);
+      setMeasureEnd(false);
+    }
+  }, [measureEnd]);
 
   let overallPerformance: Evaluation = 'testOngoing';
   if (
